@@ -1,0 +1,961 @@
+{
+  "generators": {
+    "address": 4,
+    "nonce": 0
+  },
+  "auth": [
+    [
+      [
+        "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFCT4",
+        {
+          "function": {
+            "contract_fn": {
+              "contract_address": "CBKMUZNFQIAL775XBB2W2GP5CNHBM5YGH6C3XB7AY6SUVO2IBU3VYK2V",
+              "function_name": "initialize",
+              "args": [
+                {
+                  "address": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFCT4"
+                }
+              ]
+            }
+          },
+          "sub_invocations": []
+        }
+      ]
+    ],
+    [
+      [
+        "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHK3M",
+        {
+          "function": {
+            "contract_fn": {
+              "contract_address": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFCT4",
+              "function_name": "initialize",
+              "args": [
+                {
+                  "address": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHK3M"
+                },
+                {
+                  "address": "CBKMUZNFQIAL775XBB2W2GP5CNHBM5YGH6C3XB7AY6SUVO2IBU3VYK2V"
+                }
+              ]
+            }
+          },
+          "sub_invocations": []
+        }
+      ]
+    ],
+    [
+      [
+        "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAITA4",
+        {
+          "function": {
+            "contract_fn": {
+              "contract_address": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFCT4",
+              "function_name": "record_game_session",
+              "args": [
+                {
+                  "address": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAITA4"
+                },
+                {
+                  "u32": 750
+                },
+                {
+                  "string": "adventure"
+                }
+              ]
+            }
+          },
+          "sub_invocations": []
+        }
+      ]
+    ],
+    []
+  ],
+  "ledger": {
+    "protocol_version": 21,
+    "sequence_number": 0,
+    "timestamp": 0,
+    "network_id": "0000000000000000000000000000000000000000000000000000000000000000",
+    "base_reserve": 0,
+    "min_persistent_entry_ttl": 4096,
+    "min_temp_entry_ttl": 16,
+    "max_entry_ttl": 6312000,
+    "ledger_entries": [
+      [
+        {
+          "contract_data": {
+            "contract": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD2KM",
+            "key": {
+              "ledger_key_nonce": {
+                "nonce": 801925984706572462
+              }
+            },
+            "durability": "temporary"
+          }
+        },
+        [
+          {
+            "last_modified_ledger_seq": 0,
+            "data": {
+              "contract_data": {
+                "ext": "v0",
+                "contract": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD2KM",
+                "key": {
+                  "ledger_key_nonce": {
+                    "nonce": 801925984706572462
+                  }
+                },
+                "durability": "temporary",
+                "val": "void"
+              }
+            },
+            "ext": "v0"
+          },
+          6311999
+        ]
+      ],
+      [
+        {
+          "contract_data": {
+            "contract": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFCT4",
+            "key": "ledger_key_contract_instance",
+            "durability": "persistent"
+          }
+        },
+        [
+          {
+            "last_modified_ledger_seq": 0,
+            "data": {
+              "contract_data": {
+                "ext": "v0",
+                "contract": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFCT4",
+                "key": "ledger_key_contract_instance",
+                "durability": "persistent",
+                "val": {
+                  "contract_instance": {
+                    "executable": {
+                      "wasm": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+                    },
+                    "storage": [
+                      {
+                        "key": {
+                          "vec": [
+                            {
+                              "symbol": "Admin"
+                            }
+                          ]
+                        },
+                        "val": {
+                          "address": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHK3M"
+                        }
+                      },
+                      {
+                        "key": {
+                          "vec": [
+                            {
+                              "symbol": "EcoTokenContract"
+                            }
+                          ]
+                        },
+                        "val": {
+                          "address": "CBKMUZNFQIAL775XBB2W2GP5CNHBM5YGH6C3XB7AY6SUVO2IBU3VYK2V"
+                        }
+                      },
+                      {
+                        "key": {
+                          "vec": [
+                            {
+                              "symbol": "GameSession"
+                            },
+                            {
+                              "u64": 1
+                            }
+                          ]
+                        },
+                        "val": {
+                          "map": [
+                            {
+                              "key": {
+                                "symbol": "game_type"
+                              },
+                              "val": {
+                                "string": "adventure"
+                              }
+                            },
+                            {
+                              "key": {
+                                "symbol": "player"
+                              },
+                              "val": {
+                                "address": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAITA4"
+                              }
+                            },
+                            {
+                              "key": {
+                                "symbol": "score"
+                              },
+                              "val": {
+                                "u32": 750
+                              }
+                            },
+                            {
+                              "key": {
+                                "symbol": "session_id"
+                              },
+                              "val": {
+                                "u64": 1
+                              }
+                            },
+                            {
+                              "key": {
+                                "symbol": "timestamp"
+                              },
+                              "val": {
+                                "u64": 0
+                              }
+                            },
+                            {
+                              "key": {
+                                "symbol": "tokens_earned"
+                              },
+                              "val": {
+                                "i128": {
+                                  "hi": 0,
+                                  "lo": 750000000
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "key": {
+                          "vec": [
+                            {
+                              "symbol": "Initialized"
+                            }
+                          ]
+                        },
+                        "val": {
+                          "bool": true
+                        }
+                      },
+                      {
+                        "key": {
+                          "vec": [
+                            {
+                              "symbol": "PlayerStats"
+                            },
+                            {
+                              "address": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAITA4"
+                            }
+                          ]
+                        },
+                        "val": {
+                          "map": [
+                            {
+                              "key": {
+                                "symbol": "total_games_played"
+                              },
+                              "val": {
+                                "u32": 1
+                              }
+                            },
+                            {
+                              "key": {
+                                "symbol": "total_score"
+                              },
+                              "val": {
+                                "u64": 750
+                              }
+                            },
+                            {
+                              "key": {
+                                "symbol": "total_tokens_earned"
+                              },
+                              "val": {
+                                "i128": {
+                                  "hi": 0,
+                                  "lo": 750000000
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "key": {
+                          "vec": [
+                            {
+                              "symbol": "SessionCounter"
+                            }
+                          ]
+                        },
+                        "val": {
+                          "u64": 1
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            },
+            "ext": "v0"
+          },
+          4095
+        ]
+      ],
+      [
+        {
+          "contract_data": {
+            "contract": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFCT4",
+            "key": {
+              "ledger_key_nonce": {
+                "nonce": 5541220902715666415
+              }
+            },
+            "durability": "temporary"
+          }
+        },
+        [
+          {
+            "last_modified_ledger_seq": 0,
+            "data": {
+              "contract_data": {
+                "ext": "v0",
+                "contract": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFCT4",
+                "key": {
+                  "ledger_key_nonce": {
+                    "nonce": 5541220902715666415
+                  }
+                },
+                "durability": "temporary",
+                "val": "void"
+              }
+            },
+            "ext": "v0"
+          },
+          6311999
+        ]
+      ],
+      [
+        {
+          "contract_data": {
+            "contract": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHK3M",
+            "key": {
+              "ledger_key_nonce": {
+                "nonce": 1033654523790656264
+              }
+            },
+            "durability": "temporary"
+          }
+        },
+        [
+          {
+            "last_modified_ledger_seq": 0,
+            "data": {
+              "contract_data": {
+                "ext": "v0",
+                "contract": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHK3M",
+                "key": {
+                  "ledger_key_nonce": {
+                    "nonce": 1033654523790656264
+                  }
+                },
+                "durability": "temporary",
+                "val": "void"
+              }
+            },
+            "ext": "v0"
+          },
+          6311999
+        ]
+      ],
+      [
+        {
+          "contract_data": {
+            "contract": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAITA4",
+            "key": {
+              "ledger_key_nonce": {
+                "nonce": 4837995959683129791
+              }
+            },
+            "durability": "temporary"
+          }
+        },
+        [
+          {
+            "last_modified_ledger_seq": 0,
+            "data": {
+              "contract_data": {
+                "ext": "v0",
+                "contract": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAITA4",
+                "key": {
+                  "ledger_key_nonce": {
+                    "nonce": 4837995959683129791
+                  }
+                },
+                "durability": "temporary",
+                "val": "void"
+              }
+            },
+            "ext": "v0"
+          },
+          6311999
+        ]
+      ],
+      [
+        {
+          "contract_data": {
+            "contract": "CBKMUZNFQIAL775XBB2W2GP5CNHBM5YGH6C3XB7AY6SUVO2IBU3VYK2V",
+            "key": "ledger_key_contract_instance",
+            "durability": "persistent"
+          }
+        },
+        [
+          {
+            "last_modified_ledger_seq": 0,
+            "data": {
+              "contract_data": {
+                "ext": "v0",
+                "contract": "CBKMUZNFQIAL775XBB2W2GP5CNHBM5YGH6C3XB7AY6SUVO2IBU3VYK2V",
+                "key": "ledger_key_contract_instance",
+                "durability": "persistent",
+                "val": {
+                  "contract_instance": {
+                    "executable": {
+                      "wasm": "fd603c6ca8c443ba97541f1a5fbf7a7bd6947337be36483ffbac6a51f51f6d93"
+                    },
+                    "storage": [
+                      {
+                        "key": {
+                          "vec": [
+                            {
+                              "symbol": "Admin"
+                            }
+                          ]
+                        },
+                        "val": {
+                          "address": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFCT4"
+                        }
+                      },
+                      {
+                        "key": {
+                          "vec": [
+                            {
+                              "symbol": "Balance"
+                            },
+                            {
+                              "address": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAITA4"
+                            }
+                          ]
+                        },
+                        "val": {
+                          "i128": {
+                            "hi": 0,
+                            "lo": 750000000
+                          }
+                        }
+                      },
+                      {
+                        "key": {
+                          "vec": [
+                            {
+                              "symbol": "Initialized"
+                            }
+                          ]
+                        },
+                        "val": {
+                          "bool": true
+                        }
+                      },
+                      {
+                        "key": {
+                          "vec": [
+                            {
+                              "symbol": "TotalSupply"
+                            }
+                          ]
+                        },
+                        "val": {
+                          "i128": {
+                            "hi": 0,
+                            "lo": 750000000
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            },
+            "ext": "v0"
+          },
+          4095
+        ]
+      ],
+      [
+        {
+          "contract_code": {
+            "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        },
+        [
+          {
+            "last_modified_ledger_seq": 0,
+            "data": {
+              "contract_code": {
+                "ext": "v0",
+                "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "code": ""
+              }
+            },
+            "ext": "v0"
+          },
+          4095
+        ]
+      ],
+      [
+        {
+          "contract_code": {
+            "hash": "fd603c6ca8c443ba97541f1a5fbf7a7bd6947337be36483ffbac6a51f51f6d93"
+          }
+        },
+        [
+          {
+            "last_modified_ledger_seq": 0,
+            "data": {
+              "contract_code": {
+                "ext": {
+                  "v1": {
+                    "ext": "v0",
+                    "cost_inputs": {
+                      "ext": "v0",
+                      "n_instructions": 1001,
+                      "n_functions": 25,
+                      "n_globals": 3,
+                      "n_table_entries": 0,
+                      "n_types": 13,
+                      "n_data_segments": 1,
+                      "n_elem_segments": 0,
+                      "n_imports": 11,
+                      "n_exports": 12,
+                      "n_data_segment_bytes": 45
+                    }
+                  }
+                },
+                "hash": "fd603c6ca8c443ba97541f1a5fbf7a7bd6947337be36483ffbac6a51f51f6d93",
+                "code": "0061736d0100000001460d60017e017e60027e7e017e60037e7e7e017e60037f7e7e0060017e017f60027f7e006000017f60047e7e7e7e0060027e7e0060037f7f7f0060027f7f017e6000006000017e02430b0161013000000178013100010176016700010169013800000169013700000162016a0001016901360001016201690001016c01300001016c01310001016c015f0002031a1903010400050607010809050a000b010b00020c0c0a0c0c0b0b05030100110619037f01418080c0000b7f0041ad80c0000b7f0041b080c0000b0780010c066d656d6f727902000a696e697469616c697a650017046d696e7400190762616c616e6365001b087472616e73666572001c106765745f746f74616c5f737570706c79001d046e616d65001e0673796d626f6c002008646563696d616c730021015f00230a5f5f646174615f656e6403010b5f5f686561705f6261736503020ab21219890101017f23808080800041206b220324808080800002400240024020012002108c808080002202108d808080000d00420021020c010b20032002108e80808000108f8080800020032802004101460d01200329031021022000200329031837031820002002370310420121020b2000200237030020004200370308200341206a2480808080000f0b000bfb0101017f23808080800041106b220224808080800002400240024002400240024002402000a70e0400010203000b2002418080c08000410510948080800020022802000d04200220022903081095808080000c030b2002418580c08000410710948080800020022802000d032002290308210020022001370308200220003703002002410210968080800021000c040b2002418c80c08000410b10948080800020022802000d02200220022903081095808080000c010b2002419780c08000410b10948080800020022802000d01200220022903081095808080000b200229030821002002290300500d010b000b200241106a24808080800020000b0f00200042021088808080004201510b0c00200042021089808080000b7d02017f017e02400240024002402001a741ff0171220241c500460d002002410b470d0220002001423f87370318200020014208873703100c010b200110838080800021032001108480808000210120002003370318200020013703100b420021010c010b200042839080808001370308420121010b200020013703000b1401017e42032000108c80808000108d808080000b1c0020002001108c80808000200220031092808080001093808080000b4500024020004280808080808080c0007c42ffffffffffffffff00560d00200020008520012000423f8785844200520d002000420886420b840f0b200120001086808080000b0f00200020014202108a808080001a0bdb0102017e047f02400240200241094b0d004200210320022104200121050340024020040d002003420886420e8421030c030b41012106024020052d0000220741df00460d000240200741506a41ff0171410a490d000240200741bf7f6a41ff0171411a490d002007419f7f6a41ff017141194b0d04200741456a21060c020b2007414b6a21060c010b200741526a21060b20034206862006ad42ff01838421032004417f6a2104200541016a21050c000b0b2001ad4220864204842002ad42208642048410858080800021030b20004200370300200020033703080b4401017f23808080800041106b220224808080800020022001370308200241086a410110968080800021012000420037030020002001370308200241106a2480808080000b1a002000ad4220864204842001ad4220864204841082808080000b620002400240200042ff018342cd00520d0020001080808080001a1090808080000d0142002000108c808080002000109380808000420220004200420010918080800042032000108c80808000420110938080800042020f0b000b109880808000000b0300000bed0304017f027e017f027e23808080800041306b22022480808080000240200042ff018342cd00520d0020022001108f8080800020022802004101460d0020022903182101200229031021030240109080808000450d00024042002001108c808080002204108d80808000450d002004108e80808000220442ff018342cd00520d0220041080808080001a200342005220014200552001501b450d01200242012000108b8080800020022903184200200228020041017122051b2204200185427f852004200420017c2002290310420020051b220620037c2207200654ad7c22068583427f570d004201200020072006109180808000200242022001108b8080800020022903184200200228020041017122051b2204200185427f852004200420017c2002290310420020051b220620037c2207200654ad7c22068583427f570d004202200120072006109180808000200220003703282002428ef2b3d70c370320410021050340024020054110470d00410021050240034020054110460d01200220056a200241206a20056a290300370300200541086a21050c000b0b20024102109680808000200320011092808080001081808080001a200241306a24808080800042020f0b200220056a4202370300200541086a21050c000b0b109a80808000000b109880808000000b000b090010a280808000000b6201027f23808080800041206b22012480808080000240200042ff018342cd00510d00000b200142012000108b8080800020012903104200200128020041017122021b2001290318420020021b1092808080002100200141206a24808080800020000bd90304017f017e017f037e23808080800041c0006b22032480808080000240200042ff018342cd00520d00200142ff018342cd00520d0020032002108f8080800020032802004101460d0020032903182102200329031021040240109080808000450d0020001080808080001a200442005220024200552002501b450d00200342012000108b8080800020032903104200200328020041017122051b220620045a2003290318420020051b220720025920072002511b450d0042012000200620047d200720027d2006200454ad7d109180808000200342012001108b80808000024020032903184200200328020041017122051b2207200285427f852007200720027c2003290310420020051b220620047c2208200654ad7c22068583427f570d00420120012008200610918080800020032001370338200320003703302003428eeeea95beb6def300370328410021050340024020054118470d00410021050240034020054118460d01200320056a200341286a20056a290300370300200541086a21050c000b0b20034103109680808000200420021092808080001081808080001a200341c0006a24808080800042020f0b200320056a4202370300200541086a21050c000b0b109a80808000000b109880808000000b000b5603017f017e017f23808080800041206b2200248080808000200042022001108b8080800020002903104200200028020041017122021b2000290318420020021b1092808080002101200041206a24808080800020010b100041a280c080004108109f808080000b1a002000ad4220864204842001ad4220864204841087808080000b100041aa80c080004103109f808080000b09004284808080f0000b0900109880808000000b02000b0b360100418080c0000b2d41646d696e42616c616e6365546f74616c537570706c79496e697469616c697a656445636f546f6b656e45434f00bb170e636f6e7472616374737065637630000000020000003153746f72616765206b657973207573656420746f2070657273697374206461746120696e2074686520636f6e74726163740000000000000000000007446174614b65790000000004000000000000002c53746f726573207468652061646d696e20616464726573732077686f2063616e206d696e7420746f6b656e730000000541646d696e000000000000010000003453746f72657320696e646976696475616c206163636f756e742062616c616e636573202841646472657373202d3e2069313238290000000742616c616e6365000000000100000013000000000000002153746f7265732074686520746f74616c20737570706c79206f6620746f6b656e730000000000000b546f74616c537570706c79000000000000000028466c616720746f20636865636b20696620636f6e747261637420697320696e697469616c697a65640000000b496e697469616c697a6564000000000000000177496e697469616c697a652074686520636f6e7472616374207769746820616e2061646d696e20616464726573730a0a546869732066756e6374696f6e20736574732075702074686520636f6e747261637420616e642064657369676e6174657320616e2061646d696e2077686f2077696c6c20686176650a6578636c75736976652072696768747320746f206d696e74206e657720746f6b656e732e0a0a2320417267756d656e74730a2a2060656e7660202d2054686520636f6e747261637420656e7669726f6e6d656e740a2a206061646d696e60202d20546865206164647265737320746861742077696c6c20686176652061646d696e2070726976696c656765730a0a232050616e6963730a50616e6963732069662074686520636f6e74726163742068617320616c7265616479206265656e20696e697469616c697a65640a0a23204578616d706c650a6060600a746f6b656e2e696e697469616c697a65282661646d696e5f61646472657373293b0a606060000000000a696e697469616c697a65000000000001000000000000000561646d696e000000000000130000000000000000000002304d696e74206e657720746f6b656e7320746f20612073706563696669656420616464726573730a0a4f6e6c79207468652061646d696e2063616e206d696e7420746f6b656e732e205468697320696e6372656173657320626f74682074686520726563697069656e7427732062616c616e63650a616e642074686520746f74616c20737570706c792e0a0a2320417267756d656e74730a2a2060656e7660202d2054686520636f6e747261637420656e7669726f6e6d656e740a2a2060746f60202d20546865206164647265737320746f207265636569766520746865206d696e74656420746f6b656e730a2a2060616d6f756e7460202d2054686520616d6f756e74206f6620746f6b656e7320746f206d696e7420286d75737420626520706f736974697665290a0a232050616e6963730a2d20496620636f6e7472616374206973206e6f7420696e697469616c697a65640a2d2049662063616c6c6572206973206e6f74207468652061646d696e0a2d20496620616d6f756e74206973206e6f7420706f7369746976650a0a23204576656e74730a456d697473206120226d696e7422206576656e7420776974682074686520726563697069656e7420616e6420616d6f756e740a0a23204578616d706c650a6060600a746f6b656e2e6d696e742826656e762c2026726563697069656e745f616464726573732c2026313030305f30303030303030293b202f2f203130303020746f6b656e732077697468203720646563696d616c730a606060000000046d696e74000000020000000000000002746f0000000000130000000000000006616d6f756e7400000000000b0000000000000000000000fa476574207468652062616c616e6365206f66206120737065636966696320616464726573730a0a2320417267756d656e74730a2a2060656e7660202d2054686520636f6e747261637420656e7669726f6e6d656e740a2a20606164647265737360202d20546865206164647265737320746f2071756572790a0a232052657475726e730a54686520746f6b656e2062616c616e63652061732069313238202877697468203720646563696d616c20706c61636573290a0a23204578616d706c650a6060600a6c65742062616c616e6365203d20746f6b656e2e62616c616e63652826656e762c2026757365725f61646472657373293b0a60606000000000000762616c616e636500000000010000000000000007616464726573730000000013000000010000000b00000000000002505472616e7366657220746f6b656e732066726f6d206f6e65206164647265737320746f20616e6f746865720a0a5468652063616c6c6572206d75737420626520746865206066726f6d60206164647265737320616e64206d75737420686176652073756666696369656e742062616c616e63652e0a0a2320417267756d656e74730a2a2060656e7660202d2054686520636f6e747261637420656e7669726f6e6d656e740a2a206066726f6d60202d2054686520616464726573732073656e64696e6720746f6b656e7320286d757374206265207468652063616c6c6572290a2a2060746f60202d20546865206164647265737320726563656976696e6720746f6b656e730a2a2060616d6f756e7460202d2054686520616d6f756e74206f6620746f6b656e7320746f207472616e7366657220286d75737420626520706f736974697665290a0a232050616e6963730a2d20496620636f6e7472616374206973206e6f7420696e697469616c697a65640a2d20496620616d6f756e74206973206e6f7420706f7369746976650a2d2049662073656e6465722068617320696e73756666696369656e742062616c616e63650a0a23204576656e74730a456d697473206120227472616e7366657222206576656e7420776974682066726f6d2c20746f2c20616e6420616d6f756e740a0a23204578616d706c650a6060600a746f6b656e2e7472616e736665722826656e762c202666726f6d5f616464726573732c2026746f5f616464726573732c20263130305f30303030303030293b202f2f2031303020746f6b656e730a606060000000087472616e7366657200000003000000000000000466726f6d000000130000000000000002746f0000000000130000000000000006616d6f756e7400000000000b0000000000000000000001034765742074686520746f74616c20737570706c79206f6620746f6b656e730a0a52657475726e732074686520746f74616c20616d6f756e74206f6620746f6b656e7320746861742068617665206265656e206d696e7465642e0a0a2320417267756d656e74730a2a2060656e7660202d2054686520636f6e747261637420656e7669726f6e6d656e740a0a232052657475726e730a54686520746f74616c20737570706c792061732069313238202877697468203720646563696d616c20706c61636573290a0a23204578616d706c650a6060600a6c657420737570706c79203d20746f6b656e2e6765745f746f74616c5f737570706c792826656e76293b0a60606000000000106765745f746f74616c5f737570706c7900000000000000010000000b000000000000003e47657420746f6b656e206d65746164617461202d206e616d650a0a232052657475726e730a54686520746f6b656e206e616d65202245636f546f6b656e220000000000046e616d65000000000000000100000010000000000000003d47657420746f6b656e206d65746164617461202d2073796d626f6c0a0a232052657475726e730a54686520746f6b656e2073796d626f6c202245434f220000000000000673796d626f6c0000000000000000000100000010000000000000005f47657420746f6b656e206d65746164617461202d20646563696d616c730a0a232052657475726e730a546865206e756d626572206f6620646563696d616c732028372c20666f6c6c6f77696e67205374656c6c6172207374616e64617264290000000008646563696d616c73000000000000000100000004001e11636f6e7472616374656e766d6574617630000000000000001500000000006f0e636f6e74726163746d65746176300000000000000005727376657200000000000006312e39302e3000000000000000000008727373646b7665720000002f32312e372e37233564613738396335306231386134633262653533333934313338323132666564353666306466633400"
+              }
+            },
+            "ext": "v0"
+          },
+          4095
+        ]
+      ]
+    ]
+  },
+  "events": [
+    {
+      "event": {
+        "ext": "v0",
+        "contract_id": null,
+        "type_": "diagnostic",
+        "body": {
+          "v0": {
+            "topics": [
+              {
+                "symbol": "fn_call"
+              },
+              {
+                "bytes": "54ca65a58200bfffb708756d19fd134e1677063f85bb87e0c7a54abb480d375c"
+              },
+              {
+                "symbol": "initialize"
+              }
+            ],
+            "data": {
+              "address": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFCT4"
+            }
+          }
+        }
+      },
+      "failed_call": false
+    },
+    {
+      "event": {
+        "ext": "v0",
+        "contract_id": "54ca65a58200bfffb708756d19fd134e1677063f85bb87e0c7a54abb480d375c",
+        "type_": "diagnostic",
+        "body": {
+          "v0": {
+            "topics": [
+              {
+                "symbol": "fn_return"
+              },
+              {
+                "symbol": "initialize"
+              }
+            ],
+            "data": "void"
+          }
+        }
+      },
+      "failed_call": false
+    },
+    {
+      "event": {
+        "ext": "v0",
+        "contract_id": null,
+        "type_": "diagnostic",
+        "body": {
+          "v0": {
+            "topics": [
+              {
+                "symbol": "fn_call"
+              },
+              {
+                "bytes": "0000000000000000000000000000000000000000000000000000000000000002"
+              },
+              {
+                "symbol": "initialize"
+              }
+            ],
+            "data": {
+              "vec": [
+                {
+                  "address": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHK3M"
+                },
+                {
+                  "address": "CBKMUZNFQIAL775XBB2W2GP5CNHBM5YGH6C3XB7AY6SUVO2IBU3VYK2V"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "failed_call": false
+    },
+    {
+      "event": {
+        "ext": "v0",
+        "contract_id": "0000000000000000000000000000000000000000000000000000000000000002",
+        "type_": "diagnostic",
+        "body": {
+          "v0": {
+            "topics": [
+              {
+                "symbol": "fn_return"
+              },
+              {
+                "symbol": "initialize"
+              }
+            ],
+            "data": "void"
+          }
+        }
+      },
+      "failed_call": false
+    },
+    {
+      "event": {
+        "ext": "v0",
+        "contract_id": null,
+        "type_": "diagnostic",
+        "body": {
+          "v0": {
+            "topics": [
+              {
+                "symbol": "fn_call"
+              },
+              {
+                "bytes": "0000000000000000000000000000000000000000000000000000000000000002"
+              },
+              {
+                "symbol": "record_game_session"
+              }
+            ],
+            "data": {
+              "vec": [
+                {
+                  "address": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAITA4"
+                },
+                {
+                  "u32": 750
+                },
+                {
+                  "string": "adventure"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "failed_call": false
+    },
+    {
+      "event": {
+        "ext": "v0",
+        "contract_id": "0000000000000000000000000000000000000000000000000000000000000002",
+        "type_": "diagnostic",
+        "body": {
+          "v0": {
+            "topics": [
+              {
+                "symbol": "fn_call"
+              },
+              {
+                "bytes": "54ca65a58200bfffb708756d19fd134e1677063f85bb87e0c7a54abb480d375c"
+              },
+              {
+                "symbol": "mint"
+              }
+            ],
+            "data": {
+              "vec": [
+                {
+                  "address": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAITA4"
+                },
+                {
+                  "i128": {
+                    "hi": 0,
+                    "lo": 750000000
+                  }
+                }
+              ]
+            }
+          }
+        }
+      },
+      "failed_call": false
+    },
+    {
+      "event": {
+        "ext": "v0",
+        "contract_id": "54ca65a58200bfffb708756d19fd134e1677063f85bb87e0c7a54abb480d375c",
+        "type_": "contract",
+        "body": {
+          "v0": {
+            "topics": [
+              {
+                "symbol": "mint"
+              },
+              {
+                "address": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAITA4"
+              }
+            ],
+            "data": {
+              "i128": {
+                "hi": 0,
+                "lo": 750000000
+              }
+            }
+          }
+        }
+      },
+      "failed_call": false
+    },
+    {
+      "event": {
+        "ext": "v0",
+        "contract_id": "54ca65a58200bfffb708756d19fd134e1677063f85bb87e0c7a54abb480d375c",
+        "type_": "diagnostic",
+        "body": {
+          "v0": {
+            "topics": [
+              {
+                "symbol": "fn_return"
+              },
+              {
+                "symbol": "mint"
+              }
+            ],
+            "data": "void"
+          }
+        }
+      },
+      "failed_call": false
+    },
+    {
+      "event": {
+        "ext": "v0",
+        "contract_id": "0000000000000000000000000000000000000000000000000000000000000002",
+        "type_": "contract",
+        "body": {
+          "v0": {
+            "topics": [
+              {
+                "symbol": "game_done"
+              },
+              {
+                "address": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAITA4"
+              }
+            ],
+            "data": {
+              "vec": [
+                {
+                  "u64": 1
+                },
+                {
+                  "u32": 750
+                },
+                {
+                  "i128": {
+                    "hi": 0,
+                    "lo": 750000000
+                  }
+                }
+              ]
+            }
+          }
+        }
+      },
+      "failed_call": false
+    },
+    {
+      "event": {
+        "ext": "v0",
+        "contract_id": "0000000000000000000000000000000000000000000000000000000000000002",
+        "type_": "diagnostic",
+        "body": {
+          "v0": {
+            "topics": [
+              {
+                "symbol": "fn_return"
+              },
+              {
+                "symbol": "record_game_session"
+              }
+            ],
+            "data": {
+              "map": [
+                {
+                  "key": {
+                    "symbol": "session_id"
+                  },
+                  "val": {
+                    "u64": 1
+                  }
+                },
+                {
+                  "key": {
+                    "symbol": "tokens_earned"
+                  },
+                  "val": {
+                    "i128": {
+                      "hi": 0,
+                      "lo": 750000000
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      },
+      "failed_call": false
+    },
+    {
+      "event": {
+        "ext": "v0",
+        "contract_id": null,
+        "type_": "diagnostic",
+        "body": {
+          "v0": {
+            "topics": [
+              {
+                "symbol": "fn_call"
+              },
+              {
+                "bytes": "0000000000000000000000000000000000000000000000000000000000000002"
+              },
+              {
+                "symbol": "get_game_session"
+              }
+            ],
+            "data": {
+              "u64": 1
+            }
+          }
+        }
+      },
+      "failed_call": false
+    },
+    {
+      "event": {
+        "ext": "v0",
+        "contract_id": "0000000000000000000000000000000000000000000000000000000000000002",
+        "type_": "diagnostic",
+        "body": {
+          "v0": {
+            "topics": [
+              {
+                "symbol": "fn_return"
+              },
+              {
+                "symbol": "get_game_session"
+              }
+            ],
+            "data": {
+              "map": [
+                {
+                  "key": {
+                    "symbol": "game_type"
+                  },
+                  "val": {
+                    "string": "adventure"
+                  }
+                },
+                {
+                  "key": {
+                    "symbol": "player"
+                  },
+                  "val": {
+                    "address": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAITA4"
+                  }
+                },
+                {
+                  "key": {
+                    "symbol": "score"
+                  },
+                  "val": {
+                    "u32": 750
+                  }
+                },
+                {
+                  "key": {
+                    "symbol": "session_id"
+                  },
+                  "val": {
+                    "u64": 1
+                  }
+                },
+                {
+                  "key": {
+                    "symbol": "timestamp"
+                  },
+                  "val": {
+                    "u64": 0
+                  }
+                },
+                {
+                  "key": {
+                    "symbol": "tokens_earned"
+                  },
+                  "val": {
+                    "i128": {
+                      "hi": 0,
+                      "lo": 750000000
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      },
+      "failed_call": false
+    }
+  ]
+}

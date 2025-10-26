@@ -1,0 +1,148 @@
+.impactPage {
+  padding: var(--spacing-2xl) 0;
+  min-height: calc(100vh - 80px);
+}
+
+.impactPage h1 {
+  text-align: center;
+  margin-bottom: var(--spacing-md);
+}
+
+.subtitle {
+  text-align: center;
+  color: var(--color-text-secondary);
+  margin-bottom: var(--spacing-2xl);
+}
+
+/* Stats Grid */
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: var(--spacing-lg);
+  margin-bottom: var(--spacing-2xl);
+}
+
+.statsGrid .card {
+  text-align: center;
+}
+
+.statValue {
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  display: block;
+  margin: var(--spacing-lg) 0;
+}
+
+.statChange {
+  color: var(--color-success);
+  font-size: 0.875rem;
+  margin: 0;
+}
+
+/* Carbon Card */
+.carbonCard {
+  margin-bottom: var(--spacing-2xl);
+  background: linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary) 100%);
+  border: none;
+}
+
+.carbonCard h2 {
+  text-align: center;
+  margin-bottom: var(--spacing-xl);
+}
+
+.carbonStats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--spacing-xl);
+  text-align: center;
+}
+
+.carbonStat {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.carbonValue {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: white;
+}
+
+.carbonLabel {
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* Map Placeholder */
+.mapPlaceholder {
+  text-align: center;
+  padding: var(--spacing-2xl);
+  background: var(--color-bg-tertiary);
+  border-radius: var(--radius-md);
+  margin-top: var(--spacing-lg);
+}
+
+.mapPlaceholder p:first-child {
+  font-size: 4rem;
+  margin-bottom: var(--spacing-md);
+}
+
+/* Activity List */
+.activityList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+  margin-top: var(--spacing-lg);
+}
+
+.activityItem {
+  display: flex;
+  gap: var(--spacing-md);
+  padding: var(--spacing-md);
+  background: var(--color-bg-tertiary);
+  border-radius: var(--radius-md);
+  transition: all var(--transition-fast);
+}
+
+.activityItem:hover {
+  background: var(--color-bg-secondary);
+  transform: translateX(4px);
+}
+
+.activityIcon {
+  font-size: 2rem;
+  flex-shrink: 0;
+}
+
+.activityContent {
+  flex: 1;
+}
+
+.activityText {
+  margin-bottom: var(--spacing-xs);
+  color: var(--color-text-primary);
+}
+
+.activityText strong {
+  color: var(--color-primary);
+}
+
+.activityTime {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  margin: 0;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .carbonStats {
+    grid-template-columns: 1fr;
+  }
+
+  .statValue {
+    font-size: 2rem;
+  }
+}

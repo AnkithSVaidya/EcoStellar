@@ -1,0 +1,7 @@
+/workspaces/EcoStellar/contracts/tree-nft/target/release/deps/ident_case-53240a48067e4a05.d: /home/codespace/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ident_case-1.0.1/src/lib.rs
+
+/workspaces/EcoStellar/contracts/tree-nft/target/release/deps/libident_case-53240a48067e4a05.rlib: /home/codespace/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ident_case-1.0.1/src/lib.rs
+
+/workspaces/EcoStellar/contracts/tree-nft/target/release/deps/libident_case-53240a48067e4a05.rmeta: /home/codespace/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ident_case-1.0.1/src/lib.rs
+
+/home/codespace/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ident_case-1.0.1/src/lib.rs:

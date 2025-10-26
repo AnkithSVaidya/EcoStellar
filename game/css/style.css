@@ -1,0 +1,140 @@
+/* ============================================
+   CARBON DASH - Responsive Game Styles
+   ============================================ */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+#game-container {
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+    max-width: 850px;
+    width: 100%;
+}
+
+/* ============================================
+   HEADER
+   ============================================ */
+
+#game-header {
+    background: linear-gradient(135deg, #00FF88 0%, #00DD66 100%);
+    padding: 20px;
+    text-align: center;
+    color: #000;
+}
+
+#game-header h1 {
+    font-size: 2.5em;
+    margin-bottom: 5px;
+    text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.3);
+}
+
+#game-header p {
+    font-size: 1.1em;
+    opacity: 0.8;
+}
+
+/* ============================================
+   GAME CANVAS
+   ============================================ */
+
+#phaser-game {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #87CEEB;
+    position: relative;
+}
+
+#phaser-game canvas {
+    display: block;
+    margin: 0 auto;
+    border: none;
+}
+
+/* ============================================
+   FOOTER
+   ============================================ */
+
+#game-footer {
+    background: #2c3e50;
+    padding: 15px;
+    text-align: center;
+    color: #ecf0f1;
+    font-size: 0.9em;
+}
+
+/* ============================================
+   MOBILE RESPONSIVE
+   ============================================ */
+
+@media (max-width: 850px) {
+    #game-header h1 {
+        font-size: 2em;
+    }
+    
+    #game-header p {
+        font-size: 1em;
+    }
+    
+    /* Scale game canvas on smaller screens */
+    #phaser-game canvas {
+        max-width: 100%;
+        height: auto !important;
+    }
+}
+
+@media (max-width: 600px) {
+    body {
+        padding: 10px;
+    }
+    
+    #game-container {
+        border-radius: 10px;
+    }
+    
+    #game-header h1 {
+        font-size: 1.5em;
+    }
+    
+    #game-header p {
+        font-size: 0.9em;
+    }
+    
+    #game-footer {
+        font-size: 0.8em;
+        padding: 10px;
+    }
+}
+
+/* ============================================
+   LOADING ANIMATION (Optional Enhancement)
+   ============================================ */
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+}
+
+.loading {
+    animation: pulse 1.5s ease-in-out infinite;
+}
