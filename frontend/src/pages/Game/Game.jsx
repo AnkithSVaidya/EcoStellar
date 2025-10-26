@@ -26,6 +26,10 @@ const Game = () => {
   // Modal state
   const [showGameOverModal, setShowGameOverModal] = useState(false)
   
+  // Manual wallet input
+  const [manualWallet, setManualWallet] = useState('')
+  const [walletSubmitted, setWalletSubmitted] = useState(false)
+  
   const iframeRef = useRef(null)
 
   // Listen for game events from iframe
@@ -75,12 +79,27 @@ const Game = () => {
     return () => clearInterval(interval)
   }, [])
 
+  // Handle manual wallet submission
+  const handleWalletSubmit = () => {
+    if (!manualWallet.trim()) {
+      showError('Please enter a wallet address')
+      return
+    }
+    setWalletSubmitted(true)
+    info('Wallet address saved! You can now play the game.')
+  }
+
+  // Get active wallet address (either connected or manually entered)
+  const getActiveWallet = () => {
+    return isConnected ? address : manualWallet
+  }
+
   // Claim rewards function
   const handleClaimRewards = async () => {
-    // Check wallet connection
-    if (!isConnected) {
-      info('Please connect your wallet first')
-      await connectWallet()
+    const activeWallet = getActiveWallet()
+    
+    if (!activeWallet) {
+      showError('Please enter a wallet address')
       return
     }
 
@@ -89,7 +108,7 @@ const Game = () => {
     try {
       // Simulate API call to backend
       // In production: POST /api/game/submit
-      const response = await submitGameScore(finalScore, address)
+      const response = await submitGameScore(finalScore, activeWallet)
       
       if (response.success) {
         setRewardsClaimed(true)
@@ -98,8 +117,10 @@ const Game = () => {
         // Show success message
         success(`🎉 Successfully claimed ${tokensEarned} ECO tokens!`)
         
-        // Refresh wallet balance
-        await refreshBalance()
+        // Refresh wallet balance if using Freighter
+        if (isConnected) {
+          await refreshBalance()
+        }
         
         // Hide confetti after 5 seconds
         setTimeout(() => setShowConfetti(false), 5000)
@@ -147,8 +168,10 @@ const Game = () => {
 
   // Mint NFT (placeholder)
   const handleMintNFT = async () => {
-    if (!isConnected) {
-      info('Please connect your wallet first')
+    const activeWallet = getActiveWallet()
+    
+    if (!activeWallet) {
+      info('Please enter a wallet address')
       return
     }
     
@@ -191,15 +214,41 @@ const Game = () => {
 
       {/* Game Container */}
       <div className={styles.gameContainer}>
-        {!isConnected ? (
+        {!isConnected && !walletSubmitted ? (
           <div className={styles.connectWalletOverlay}>
             <div className={styles.connectWalletCard}>
               <div className={styles.walletIcon}>🔗</div>
-              <h2>Connect Your Wallet to Play</h2>
-              <p>You need to connect your Freighter wallet to play Carbon Dash and earn ECO tokens.</p>
-              <button className="btn btn-primary btn-lg" onClick={connectWallet}>
-                Connect Wallet
+              <h2>Enter Your Wallet Address</h2>
+              <p>Enter your Stellar wallet address to play Carbon Dash and earn ECO tokens.</p>
+              
+              <div className={styles.walletInputGroup}>
+                <input
+                  type="text"
+                  className={styles.walletInput}
+                  placeholder="G... (Stellar address)"
+                  value={manualWallet}
+                  onChange={(e) => setManualWallet(e.target.value)}
+                  onKeyPress={(e) => e.key === 'Enter' && handleWalletSubmit()}
+                  maxLength={56}
+                />
+              </div>
+              
+              <button 
+                className="btn btn-primary btn-lg" 
+                onClick={handleWalletSubmit}
+                disabled={!manualWallet.trim()}
+              >
+                Start Playing 🎮
               </button>
+              
+              <div className={styles.divider}>
+                <span>or</span>
+              </div>
+              
+              <button className="btn btn-outline btn-lg" onClick={connectWallet}>
+                Connect Freighter Wallet
+              </button>
+              
               <p className={styles.installNote}>
                 Don't have Freighter? <a href="https://www.freighter.app/" target="_blank" rel="noopener noreferrer">Install it here</a>
               </p>
