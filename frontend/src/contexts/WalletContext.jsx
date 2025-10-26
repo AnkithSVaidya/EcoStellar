@@ -16,14 +16,93 @@ export const WalletProvider = ({ children }) => {
   const [isConnected, setIsConnected] = useState(false)
   const [isConnecting, setIsConnecting] = useState(false)
   const [balance, setBalance] = useState(null)
+  const [usdcBalance, setUsdcBalance] = useState(null)
   const [network, setNetwork] = useState('testnet')
+  const [accountExists, setAccountExists] = useState(false)
+  const [error, setError] = useState(null)
+
+  // Stellar server instance
+  const getServer = () => {
+    return new StellarSdk.Horizon.Server(
+      network === 'testnet' 
+        ? 'https://horizon-testnet.stellar.org'
+        : 'https://horizon.stellar.org'
+    )
+  }
 
   // Check if Freighter is installed
   const isFreighterInstalled = () => {
     return typeof window !== 'undefined' && window.freighter !== undefined
   }
 
-  // Connect wallet
+  // Verify Stellar address and fetch balance
+  const verifyAndConnectAddress = async (publicKey) => {
+    setIsConnecting(true)
+    setError(null)
+
+    try {
+      // Validate address format
+      if (!StellarSdk.StrKey.isValidEd25519PublicKey(publicKey)) {
+        throw new Error('Invalid Stellar address format')
+      }
+
+      const server = getServer()
+      
+      try {
+        // Try to load account from Stellar network
+        const account = await server.loadAccount(publicKey)
+        
+        // Account exists on Stellar!
+        setAccountExists(true)
+        
+        // Get XLM balance
+        const xlmBalance = account.balances.find(b => b.asset_type === 'native')
+        setBalance(xlmBalance ? parseFloat(xlmBalance.balance) : 0)
+        
+        // Get USDC balance (if exists)
+        const usdcBal = account.balances.find(b => 
+          b.asset_code === 'USDC' || 
+          (b.asset_code && b.asset_code.includes('USD'))
+        )
+        setUsdcBalance(usdcBal ? parseFloat(usdcBal.balance) : 0)
+        
+        setAddress(publicKey)
+        setIsConnected(true)
+        localStorage.setItem('walletAddress', publicKey)
+        
+        return { success: true, exists: true, account }
+        
+      } catch (accountError) {
+        // Account doesn't exist on network yet (unfunded)
+        if (accountError.response && accountError.response.status === 404) {
+          setAccountExists(false)
+          setBalance(0)
+          setUsdcBalance(0)
+          setAddress(publicKey)
+          setIsConnected(true)
+          localStorage.setItem('walletAddress', publicKey)
+          
+          return { 
+            success: true, 
+            exists: false, 
+            message: 'Address valid but unfunded. Fund it at https://laboratory.stellar.org/#account-creator?network=test' 
+          }
+        }
+        throw accountError
+      }
+      
+    } catch (error) {
+      console.error('Wallet verification failed:', error)
+      setError(error.message)
+      setIsConnected(false)
+      setAddress(null)
+      return { success: false, error: error.message }
+    } finally {
+      setIsConnecting(false)
+    }
+  }
+
+  // Connect wallet (Freighter)
   const connectWallet = async () => {
     if (!isFreighterInstalled()) {
       throw new Error('Freighter wallet is not installed. Please install it from https://www.freighter.app/')
@@ -35,16 +114,8 @@ export const WalletProvider = ({ children }) => {
       // Request public key from Freighter
       const publicKey = await window.freighter.getPublicKey()
       
-      setAddress(publicKey)
-      setIsConnected(true)
+      return await verifyAndConnectAddress(publicKey)
       
-      // Fetch balance
-      await fetchBalance(publicKey)
-      
-      // Store in localStorage
-      localStorage.setItem('walletAddress', publicKey)
-      
-      return publicKey
     } catch (error) {
       console.error('Failed to connect wallet:', error)
       throw error
@@ -53,30 +124,51 @@ export const WalletProvider = ({ children }) => {
     }
   }
 
+  // Manual address connection (for testing)
+  const connectManualAddress = async (publicKey) => {
+    return await verifyAndConnectAddress(publicKey)
+  }
+
   // Disconnect wallet
   const disconnectWallet = () => {
     setAddress(null)
     setIsConnected(false)
     setBalance(null)
+    setUsdcBalance(null)
+    setAccountExists(false)
+    setError(null)
     localStorage.removeItem('walletAddress')
   }
 
-  // Fetch XLM balance
+  // Fetch XLM balance (real Stellar call)
   const fetchBalance = async (publicKey) => {
     try {
-      const server = new StellarSdk.Horizon.Server(
-        network === 'testnet' 
-          ? 'https://horizon-testnet.stellar.org'
-          : 'https://horizon.stellar.org'
-      )
-      
+      const server = getServer()
       const account = await server.loadAccount(publicKey)
-      const xlmBalance = account.balances.find(b => b.asset_type === 'native')
       
+      // Get XLM balance
+      const xlmBalance = account.balances.find(b => b.asset_type === 'native')
       setBalance(xlmBalance ? parseFloat(xlmBalance.balance) : 0)
+      
+      // Get USDC balance
+      const usdcBal = account.balances.find(b => 
+        b.asset_code === 'USDC' || 
+        (b.asset_code && b.asset_code.includes('USD'))
+      )
+      setUsdcBalance(usdcBal ? parseFloat(usdcBal.balance) : 0)
+      
+      setAccountExists(true)
+      
     } catch (error) {
-      console.error('Failed to fetch balance:', error)
-      setBalance(0)
+      if (error.response && error.response.status === 404) {
+        // Account not found (unfunded)
+        setAccountExists(false)
+        setBalance(0)
+        setUsdcBalance(0)
+      } else {
+        console.error('Failed to fetch balance:', error)
+        setError(error.message)
+      }
     }
   }
 
@@ -101,39 +193,42 @@ export const WalletProvider = ({ children }) => {
     }
   }
 
-  // Auto-connect on mount if previously connected
+  // Auto-connect on mount if previously connected (with real verification)
   useEffect(() => {
     const savedAddress = localStorage.getItem('walletAddress')
     if (savedAddress) {
-      // Just set the address from localStorage (simulation mode)
-      setAddress(savedAddress)
-      setIsConnected(true)
-      setBalance(100.50) // Mock balance
+      // Verify the saved address on Stellar network
+      verifyAndConnectAddress(savedAddress)
     }
   }, [])
 
-  // Refresh balance every 30 seconds if connected
+  // Refresh balance every 30 seconds if connected (real Stellar calls)
   useEffect(() => {
-    if (isConnected && address) {
+    if (isConnected && address && accountExists) {
       const interval = setInterval(() => {
         fetchBalance(address)
-      }, 30000)
+      }, 30000) // Every 30 seconds
       
       return () => clearInterval(interval)
     }
-  }, [isConnected, address, network])
+  }, [isConnected, address, accountExists, network])
 
   const value = {
     address,
     isConnected,
     isConnecting,
     balance,
+    usdcBalance,
     network,
+    accountExists,
+    error,
     isFreighterInstalled,
     connectWallet,
+    connectManualAddress,
     disconnectWallet,
     signTransaction,
     refreshBalance: () => address && fetchBalance(address),
+    setNetwork,
   }
 
   return (
