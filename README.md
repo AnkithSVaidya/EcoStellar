@@ -2,6 +2,17 @@
 
 Video link for the project - https://drive.google.com/file/d/1ISBvItoVuZLG5r6WCvwnYYQQUi8c_Q6C/view?usp=sharing 
 
+the prod link has cache issues, if that just gives wallet and game please do run this locally
+
+# Start server
+npm run dev
+
+# Build for production
+npm run build
+
+# Run with specific port
+PORT=3001 npm run dev
+
 A Stellar/Soroban smart contract platform for the EcoQuest gaming ecosystem.
 
 ## 🎮 About
