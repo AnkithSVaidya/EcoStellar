@@ -15,6 +15,15 @@
               "args": [
                 {
                   "address": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFCT4"
+                },
+                {
+                  "string": "EcoStellar Tree Certificates"
+                },
+                {
+                  "string": "TREE"
+                },
+                {
+                  "string": "https://api.ecostellar.com/trees/"
                 }
               ]
             }
@@ -74,6 +83,18 @@
                         "key": {
                           "vec": [
                             {
+                              "symbol": "BaseURI"
+                            }
+                          ]
+                        },
+                        "val": {
+                          "string": "https://api.ecostellar.com/trees/"
+                        }
+                      },
+                      {
+                        "key": {
+                          "vec": [
+                            {
                               "symbol": "Initialized"
                             }
                           ]
@@ -86,7 +107,31 @@
                         "key": {
                           "vec": [
                             {
-                              "symbol": "NFTCounter"
+                              "symbol": "Name"
+                            }
+                          ]
+                        },
+                        "val": {
+                          "string": "EcoStellar Tree Certificates"
+                        }
+                      },
+                      {
+                        "key": {
+                          "vec": [
+                            {
+                              "symbol": "Symbol"
+                            }
+                          ]
+                        },
+                        "val": {
+                          "string": "TREE"
+                        }
+                      },
+                      {
+                        "key": {
+                          "vec": [
+                            {
+                              "symbol": "TotalSupply"
                             }
                           ]
                         },
@@ -180,7 +225,20 @@
               }
             ],
             "data": {
-              "address": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFCT4"
+              "vec": [
+                {
+                  "address": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFCT4"
+                },
+                {
+                  "string": "EcoStellar Tree Certificates"
+                },
+                {
+                  "string": "TREE"
+                },
+                {
+                  "string": "https://api.ecostellar.com/trees/"
+                }
+              ]
             }
           }
         }
@@ -197,13 +255,17 @@
             "topics": [
               {
                 "symbol": "init"
-              },
-              {
-                "address": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFCT4"
               }
             ],
             "data": {
-              "symbol": "TreeNFT"
+              "vec": [
+                {
+                  "string": "EcoStellar Tree Certificates"
+                },
+                {
+                  "string": "TREE"
+                }
+              ]
             }
           }
         }
@@ -250,7 +312,20 @@
               }
             ],
             "data": {
-              "address": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFCT4"
+              "vec": [
+                {
+                  "address": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFCT4"
+                },
+                {
+                  "string": "EcoStellar Tree Certificates"
+                },
+                {
+                  "string": "TREE"
+                },
+                {
+                  "string": "https://api.ecostellar.com/trees/"
+                }
+              ]
             }
           }
         }
@@ -272,10 +347,19 @@
             "data": {
               "vec": [
                 {
-                  "string": "caught panic 'Contract already initialized' from contract function 'Symbol(obj#33)'"
+                  "string": "caught panic 'Contract already initialized' from contract function 'Symbol(obj#47)'"
                 },
                 {
                   "address": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFCT4"
+                },
+                {
+                  "string": "EcoStellar Tree Certificates"
+                },
+                {
+                  "string": "TREE"
+                },
+                {
+                  "string": "https://api.ecostellar.com/trees/"
                 }
               ]
             }
@@ -338,6 +422,15 @@
                   "vec": [
                     {
                       "address": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFCT4"
+                    },
+                    {
+                      "string": "EcoStellar Tree Certificates"
+                    },
+                    {
+                      "string": "TREE"
+                    },
+                    {
+                      "string": "https://api.ecostellar.com/trees/"
                     }
                   ]
                 }

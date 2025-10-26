@@ -15,6 +15,15 @@
               "args": [
                 {
                   "address": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFCT4"
+                },
+                {
+                  "string": "EcoStellar Tree Certificates"
+                },
+                {
+                  "string": "TREE"
+                },
+                {
+                  "string": "https://api.ecostellar.com/trees/"
                 }
               ]
             }
@@ -30,13 +39,16 @@
           "function": {
             "contract_fn": {
               "contract_address": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD2KM",
-              "function_name": "mint_tree_nft",
+              "function_name": "mint",
               "args": [
                 {
                   "address": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHK3M"
                 },
                 {
                   "string": "Oak"
+                },
+                {
+                  "string": "San Francisco, CA"
                 },
                 {
                   "i32": 37774900
@@ -48,7 +60,10 @@
                   "u64": 1698345600
                 },
                 {
-                  "string": "https://example.com/oak1.jpg"
+                  "u64": 500
+                },
+                {
+                  "string": "One Tree Planted"
                 }
               ]
             }
@@ -64,13 +79,16 @@
           "function": {
             "contract_fn": {
               "contract_address": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD2KM",
-              "function_name": "mint_tree_nft",
+              "function_name": "mint",
               "args": [
                 {
                   "address": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHK3M"
                 },
                 {
                   "string": "Pine"
+                },
+                {
+                  "string": "New York, NY"
                 },
                 {
                   "i32": 40712800
@@ -82,7 +100,10 @@
                   "u64": 1698432000
                 },
                 {
-                  "string": "https://example.com/pine1.jpg"
+                  "u64": 300
+                },
+                {
+                  "string": "Trees for the Future"
                 }
               ]
             }
@@ -98,13 +119,16 @@
           "function": {
             "contract_fn": {
               "contract_address": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD2KM",
-              "function_name": "mint_tree_nft",
+              "function_name": "mint",
               "args": [
                 {
                   "address": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAITA4"
                 },
                 {
                   "string": "Maple"
+                },
+                {
+                  "string": "Los Angeles, CA"
                 },
                 {
                   "i32": 34052200
@@ -116,7 +140,10 @@
                   "u64": 1698518400
                 },
                 {
-                  "string": "https://example.com/maple1.jpg"
+                  "u64": 400
+                },
+                {
+                  "string": "Arbor Day Foundation"
                 }
               ]
             }
@@ -178,6 +205,48 @@
                         "key": {
                           "vec": [
                             {
+                              "symbol": "Balance"
+                            },
+                            {
+                              "address": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHK3M"
+                            }
+                          ]
+                        },
+                        "val": {
+                          "u64": 2
+                        }
+                      },
+                      {
+                        "key": {
+                          "vec": [
+                            {
+                              "symbol": "Balance"
+                            },
+                            {
+                              "address": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAITA4"
+                            }
+                          ]
+                        },
+                        "val": {
+                          "u64": 1
+                        }
+                      },
+                      {
+                        "key": {
+                          "vec": [
+                            {
+                              "symbol": "BaseURI"
+                            }
+                          ]
+                        },
+                        "val": {
+                          "string": "https://api.ecostellar.com/trees/"
+                        }
+                      },
+                      {
+                        "key": {
+                          "vec": [
+                            {
                               "symbol": "Initialized"
                             }
                           ]
@@ -190,7 +259,76 @@
                         "key": {
                           "vec": [
                             {
-                              "symbol": "NFTCounter"
+                              "symbol": "Name"
+                            }
+                          ]
+                        },
+                        "val": {
+                          "string": "EcoStellar Tree Certificates"
+                        }
+                      },
+                      {
+                        "key": {
+                          "vec": [
+                            {
+                              "symbol": "OwnerOf"
+                            },
+                            {
+                              "u64": 1
+                            }
+                          ]
+                        },
+                        "val": {
+                          "address": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHK3M"
+                        }
+                      },
+                      {
+                        "key": {
+                          "vec": [
+                            {
+                              "symbol": "OwnerOf"
+                            },
+                            {
+                              "u64": 2
+                            }
+                          ]
+                        },
+                        "val": {
+                          "address": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHK3M"
+                        }
+                      },
+                      {
+                        "key": {
+                          "vec": [
+                            {
+                              "symbol": "OwnerOf"
+                            },
+                            {
+                              "u64": 3
+                            }
+                          ]
+                        },
+                        "val": {
+                          "address": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAITA4"
+                        }
+                      },
+                      {
+                        "key": {
+                          "vec": [
+                            {
+                              "symbol": "Symbol"
+                            }
+                          ]
+                        },
+                        "val": {
+                          "string": "TREE"
+                        }
+                      },
+                      {
+                        "key": {
+                          "vec": [
+                            {
+                              "symbol": "TotalSupply"
                             }
                           ]
                         },
@@ -202,48 +340,7 @@
                         "key": {
                           "vec": [
                             {
-                              "symbol": "PlayerTrees"
-                            },
-                            {
-                              "address": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHK3M"
-                            }
-                          ]
-                        },
-                        "val": {
-                          "vec": [
-                            {
-                              "u64": 1
-                            },
-                            {
-                              "u64": 2
-                            }
-                          ]
-                        }
-                      },
-                      {
-                        "key": {
-                          "vec": [
-                            {
-                              "symbol": "PlayerTrees"
-                            },
-                            {
-                              "address": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAITA4"
-                            }
-                          ]
-                        },
-                        "val": {
-                          "vec": [
-                            {
-                              "u64": 3
-                            }
-                          ]
-                        }
-                      },
-                      {
-                        "key": {
-                          "vec": [
-                            {
-                              "symbol": "TreeNFT"
+                              "symbol": "TreeData"
                             },
                             {
                               "u64": 1
@@ -254,10 +351,10 @@
                           "map": [
                             {
                               "key": {
-                                "symbol": "image_url"
+                                "symbol": "carbon_offset"
                               },
                               "val": {
-                                "string": "https://example.com/oak1.jpg"
+                                "u64": 500
                               }
                             },
                             {
@@ -270,6 +367,14 @@
                             },
                             {
                               "key": {
+                                "symbol": "location"
+                              },
+                              "val": {
+                                "string": "San Francisco, CA"
+                              }
+                            },
+                            {
+                              "key": {
                                 "symbol": "longitude"
                               },
                               "val": {
@@ -278,26 +383,10 @@
                             },
                             {
                               "key": {
-                                "symbol": "mint_timestamp"
+                                "symbol": "partner_org"
                               },
                               "val": {
-                                "u64": 0
-                              }
-                            },
-                            {
-                              "key": {
-                                "symbol": "nft_id"
-                              },
-                              "val": {
-                                "u64": 1
-                              }
-                            },
-                            {
-                              "key": {
-                                "symbol": "owner"
-                              },
-                              "val": {
-                                "address": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHK3M"
+                                "string": "One Tree Planted"
                               }
                             },
                             {
@@ -323,7 +412,7 @@
                         "key": {
                           "vec": [
                             {
-                              "symbol": "TreeNFT"
+                              "symbol": "TreeData"
                             },
                             {
                               "u64": 2
@@ -334,10 +423,10 @@
                           "map": [
                             {
                               "key": {
-                                "symbol": "image_url"
+                                "symbol": "carbon_offset"
                               },
                               "val": {
-                                "string": "https://example.com/pine1.jpg"
+                                "u64": 300
                               }
                             },
                             {
@@ -350,6 +439,14 @@
                             },
                             {
                               "key": {
+                                "symbol": "location"
+                              },
+                              "val": {
+                                "string": "New York, NY"
+                              }
+                            },
+                            {
+                              "key": {
                                 "symbol": "longitude"
                               },
                               "val": {
@@ -358,26 +455,10 @@
                             },
                             {
                               "key": {
-                                "symbol": "mint_timestamp"
+                                "symbol": "partner_org"
                               },
                               "val": {
-                                "u64": 0
-                              }
-                            },
-                            {
-                              "key": {
-                                "symbol": "nft_id"
-                              },
-                              "val": {
-                                "u64": 2
-                              }
-                            },
-                            {
-                              "key": {
-                                "symbol": "owner"
-                              },
-                              "val": {
-                                "address": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHK3M"
+                                "string": "Trees for the Future"
                               }
                             },
                             {
@@ -403,7 +484,7 @@
                         "key": {
                           "vec": [
                             {
-                              "symbol": "TreeNFT"
+                              "symbol": "TreeData"
                             },
                             {
                               "u64": 3
@@ -414,10 +495,10 @@
                           "map": [
                             {
                               "key": {
-                                "symbol": "image_url"
+                                "symbol": "carbon_offset"
                               },
                               "val": {
-                                "string": "https://example.com/maple1.jpg"
+                                "u64": 400
                               }
                             },
                             {
@@ -430,6 +511,14 @@
                             },
                             {
                               "key": {
+                                "symbol": "location"
+                              },
+                              "val": {
+                                "string": "Los Angeles, CA"
+                              }
+                            },
+                            {
+                              "key": {
                                 "symbol": "longitude"
                               },
                               "val": {
@@ -438,26 +527,10 @@
                             },
                             {
                               "key": {
-                                "symbol": "mint_timestamp"
+                                "symbol": "partner_org"
                               },
                               "val": {
-                                "u64": 0
-                              }
-                            },
-                            {
-                              "key": {
-                                "symbol": "nft_id"
-                              },
-                              "val": {
-                                "u64": 3
-                              }
-                            },
-                            {
-                              "key": {
-                                "symbol": "owner"
-                              },
-                              "val": {
-                                "address": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAITA4"
+                                "string": "Arbor Day Foundation"
                               }
                             },
                             {
@@ -664,7 +737,20 @@
               }
             ],
             "data": {
-              "address": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFCT4"
+              "vec": [
+                {
+                  "address": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFCT4"
+                },
+                {
+                  "string": "EcoStellar Tree Certificates"
+                },
+                {
+                  "string": "TREE"
+                },
+                {
+                  "string": "https://api.ecostellar.com/trees/"
+                }
+              ]
             }
           }
         }
@@ -681,13 +767,17 @@
             "topics": [
               {
                 "symbol": "init"
-              },
-              {
-                "address": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFCT4"
               }
             ],
             "data": {
-              "symbol": "TreeNFT"
+              "vec": [
+                {
+                  "string": "EcoStellar Tree Certificates"
+                },
+                {
+                  "string": "TREE"
+                }
+              ]
             }
           }
         }
@@ -730,7 +820,7 @@
                 "bytes": "0000000000000000000000000000000000000000000000000000000000000001"
               },
               {
-                "symbol": "mint_tree_nft"
+                "symbol": "mint"
               }
             ],
             "data": {
@@ -742,6 +832,9 @@
                   "string": "Oak"
                 },
                 {
+                  "string": "San Francisco, CA"
+                },
+                {
                   "i32": 37774900
                 },
                 {
@@ -751,7 +844,10 @@
                   "u64": 1698345600
                 },
                 {
-                  "string": "https://example.com/oak1.jpg"
+                  "u64": 500
+                },
+                {
+                  "string": "One Tree Planted"
                 }
               ]
             }
@@ -782,6 +878,9 @@
                 },
                 {
                   "string": "Oak"
+                },
+                {
+                  "string": "San Francisco, CA"
                 }
               ]
             }
@@ -802,7 +901,7 @@
                 "symbol": "fn_return"
               },
               {
-                "symbol": "mint_tree_nft"
+                "symbol": "mint"
               }
             ],
             "data": {
@@ -828,7 +927,7 @@
                 "bytes": "0000000000000000000000000000000000000000000000000000000000000001"
               },
               {
-                "symbol": "mint_tree_nft"
+                "symbol": "mint"
               }
             ],
             "data": {
@@ -840,6 +939,9 @@
                   "string": "Pine"
                 },
                 {
+                  "string": "New York, NY"
+                },
+                {
                   "i32": 40712800
                 },
                 {
@@ -849,7 +951,10 @@
                   "u64": 1698432000
                 },
                 {
-                  "string": "https://example.com/pine1.jpg"
+                  "u64": 300
+                },
+                {
+                  "string": "Trees for the Future"
                 }
               ]
             }
@@ -880,6 +985,9 @@
                 },
                 {
                   "string": "Pine"
+                },
+                {
+                  "string": "New York, NY"
                 }
               ]
             }
@@ -900,7 +1008,7 @@
                 "symbol": "fn_return"
               },
               {
-                "symbol": "mint_tree_nft"
+                "symbol": "mint"
               }
             ],
             "data": {
@@ -926,7 +1034,7 @@
                 "bytes": "0000000000000000000000000000000000000000000000000000000000000001"
               },
               {
-                "symbol": "mint_tree_nft"
+                "symbol": "mint"
               }
             ],
             "data": {
@@ -938,6 +1046,9 @@
                   "string": "Maple"
                 },
                 {
+                  "string": "Los Angeles, CA"
+                },
+                {
                   "i32": 34052200
                 },
                 {
@@ -947,7 +1058,10 @@
                   "u64": 1698518400
                 },
                 {
-                  "string": "https://example.com/maple1.jpg"
+                  "u64": 400
+                },
+                {
+                  "string": "Arbor Day Foundation"
                 }
               ]
             }
@@ -978,6 +1092,9 @@
                 },
                 {
                   "string": "Maple"
+                },
+                {
+                  "string": "Los Angeles, CA"
                 }
               ]
             }
@@ -998,7 +1115,7 @@
                 "symbol": "fn_return"
               },
               {
-                "symbol": "mint_tree_nft"
+                "symbol": "mint"
               }
             ],
             "data": {
@@ -1024,7 +1141,7 @@
                 "bytes": "0000000000000000000000000000000000000000000000000000000000000001"
               },
               {
-                "symbol": "get_player_trees"
+                "symbol": "balance_of"
               }
             ],
             "data": {
@@ -1047,18 +1164,11 @@
                 "symbol": "fn_return"
               },
               {
-                "symbol": "get_player_trees"
+                "symbol": "balance_of"
               }
             ],
             "data": {
-              "vec": [
-                {
-                  "u64": 1
-                },
-                {
-                  "u64": 2
-                }
-              ]
+              "u64": 2
             }
           }
         }
@@ -1080,7 +1190,7 @@
                 "bytes": "0000000000000000000000000000000000000000000000000000000000000001"
               },
               {
-                "symbol": "get_player_trees"
+                "symbol": "balance_of"
               }
             ],
             "data": {
@@ -1103,15 +1213,11 @@
                 "symbol": "fn_return"
               },
               {
-                "symbol": "get_player_trees"
+                "symbol": "balance_of"
               }
             ],
             "data": {
-              "vec": [
-                {
-                  "u64": 3
-                }
-              ]
+              "u64": 1
             }
           }
         }
@@ -1133,7 +1239,7 @@
                 "bytes": "0000000000000000000000000000000000000000000000000000000000000001"
               },
               {
-                "symbol": "get_total_trees_minted"
+                "symbol": "total_supply"
               }
             ],
             "data": "void"
@@ -1154,7 +1260,7 @@
                 "symbol": "fn_return"
               },
               {
-                "symbol": "get_total_trees_minted"
+                "symbol": "total_supply"
               }
             ],
             "data": {

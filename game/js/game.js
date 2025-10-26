@@ -3,43 +3,98 @@
  * Built with Phaser 3 for EcoQuest/EcoStellar
  * 
  * Game Flow:
- * 1. Player runs automatically
- * 2. Click/Tap to jump
- * 3. Avoid grey pollution obstacles
- * 4. Collect green energy orbs (+10 points each)
- * 5. Game speeds up over time
- * 6. Game over on collision → Show score & blockchain reward button
+ * 1. Enter wallet address
+ * 2. Start playing (no verification)
+ * 3. Player runs automatically
+ * 4. Click/Tap to jump
+ * 5. Avoid grey pollution obstacles
+ * 6. Collect green energy orbs (+10 points each)
+ * 7. Game speeds up over time
+ * 8. Game over on collision → Show score & blockchain reward button
  */
 
 // ============================================================================
-// GAME CONFIGURATION
+// WALLET CONNECTION HANDLER
 // ============================================================================
 
-const config = {
-    type: Phaser.AUTO,
-    width: 800,
-    height: 600,
-    parent: 'phaser-game',
-    backgroundColor: '#87CEEB', // Sky blue
-    physics: {
-        default: 'arcade',
-        arcade: {
-            gravity: { y: 1000 },
-            debug: false
-        }
-    },
-    scene: [BootScene, PlayScene, GameOverScene]
-};
+let playerWallet = '';
+let game = null;
 
-// Initialize the game
-const game = new Phaser.Game(config);
+// Wait for DOM to load
+document.addEventListener('DOMContentLoaded', function() {
+    const walletScreen = document.getElementById('wallet-screen');
+    const gameContainer = document.getElementById('game-container');
+    const walletInput = document.getElementById('wallet-address');
+    const startButton = document.getElementById('start-game-btn');
+    const playerWalletDisplay = document.getElementById('player-wallet');
+    
+    // Start game button click
+    startButton.addEventListener('click', function() {
+        const address = walletInput.value.trim();
+        
+        // Simple validation - just check if something was entered
+        if (!address) {
+            alert('Please enter a wallet address!');
+            return;
+        }
+        
+        // Store wallet address
+        playerWallet = address;
+        
+        // Show shortened address in game header
+        const shortAddress = address.length > 10 
+            ? address.substring(0, 6) + '...' + address.substring(address.length - 4)
+            : address;
+        playerWalletDisplay.textContent = shortAddress;
+        
+        // Hide wallet screen, show game
+        walletScreen.style.display = 'none';
+        gameContainer.style.display = 'block';
+        
+        // Initialize and start the game
+        initializeGame();
+    });
+    
+    // Allow pressing Enter to start
+    walletInput.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            startButton.click();
+        }
+    });
+});
+
+// ============================================================================
+// GAME INITIALIZATION
+// ============================================================================
+
+function initializeGame() {
+    const config = {
+        type: Phaser.AUTO,
+        width: 800,
+        height: 600,
+        parent: 'phaser-game',
+        backgroundColor: '#87CEEB', // Sky blue
+        physics: {
+            default: 'arcade',
+            arcade: {
+                gravity: { y: 1000 },
+                debug: false
+            }
+        },
+        scene: [BootScene, PlayScene, GameOverScene]
+    };
+
+    // Initialize the game
+    game = new Phaser.Game(config);
+}
 
 // Global game state (accessible from outside)
 window.CarbonDash = {
     currentScore: 0,
     lastScore: 0,
     isPlaying: false,
-    lives: 3
+    lives: 3,
+    getPlayerWallet: () => playerWallet
 };
 
 // Function to send messages to parent window (React app)

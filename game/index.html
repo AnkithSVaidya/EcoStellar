@@ -10,10 +10,37 @@
     <script src="https://cdn.jsdelivr.net/npm/phaser@3.70.0/dist/phaser.min.js"></script>
 </head>
 <body>
-    <div id="game-container">
+    <!-- Wallet Connection Screen -->
+    <div id="wallet-screen">
+        <div id="wallet-container">
+            <h1>🌱 Carbon Dash</h1>
+            <p class="subtitle">Connect your wallet to start playing!</p>
+            
+            <div class="wallet-input-group">
+                <label for="wallet-address">Stellar Wallet Address</label>
+                <input 
+                    type="text" 
+                    id="wallet-address" 
+                    placeholder="Enter your Stellar wallet address (G...)"
+                    maxlength="56"
+                />
+            </div>
+            
+            <button id="start-game-btn" class="primary-btn">
+                Start Playing 🎮
+            </button>
+            
+            <p class="info-text">
+                No verification needed - just enter your address and play!
+            </p>
+        </div>
+    </div>
+
+    <!-- Game Screen (hidden initially) -->
+    <div id="game-container" style="display: none;">
         <div id="game-header">
             <h1>🌱 Carbon Dash</h1>
-            <p>Avoid pollution, collect energy!</p>
+            <p>Avoid pollution, collect energy! • Wallet: <span id="player-wallet"></span></p>
         </div>
         
         <!-- Phaser game will be injected here -->

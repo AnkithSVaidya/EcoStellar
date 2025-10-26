@@ -18,6 +18,90 @@ body {
     padding: 20px;
 }
 
+/* ============================================
+   WALLET CONNECTION SCREEN
+   ============================================ */
+
+#wallet-screen {
+    width: 100%;
+    max-width: 500px;
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    padding: 40px;
+    text-align: center;
+}
+
+#wallet-container h1 {
+    font-size: 2.5em;
+    color: #00DD66;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.subtitle {
+    font-size: 1.2em;
+    color: #555;
+    margin-bottom: 30px;
+}
+
+.wallet-input-group {
+    margin-bottom: 25px;
+    text-align: left;
+}
+
+.wallet-input-group label {
+    display: block;
+    font-size: 1em;
+    color: #333;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+.wallet-input-group input {
+    width: 100%;
+    padding: 15px;
+    font-size: 1em;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    transition: border-color 0.3s;
+    font-family: monospace;
+}
+
+.wallet-input-group input:focus {
+    outline: none;
+    border-color: #00DD66;
+}
+
+.primary-btn {
+    width: 100%;
+    padding: 18px;
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #fff;
+    background: linear-gradient(135deg, #00FF88 0%, #00DD66 100%);
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 15px rgba(0, 221, 102, 0.3);
+}
+
+.primary-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 221, 102, 0.4);
+}
+
+.primary-btn:active {
+    transform: translateY(0);
+}
+
+.info-text {
+    margin-top: 20px;
+    font-size: 0.9em;
+    color: #888;
+}
+
 #game-container {
     background: #fff;
     border-radius: 20px;

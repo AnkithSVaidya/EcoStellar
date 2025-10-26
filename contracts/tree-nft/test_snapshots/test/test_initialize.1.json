@@ -15,6 +15,15 @@
               "args": [
                 {
                   "address": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFCT4"
+                },
+                {
+                  "string": "EcoStellar Tree Certificates"
+                },
+                {
+                  "string": "TREE"
+                },
+                {
+                  "string": "https://api.ecostellar.com/trees/"
                 }
               ]
             }
@@ -23,6 +32,8 @@
         }
       ]
     ],
+    [],
+    [],
     [],
     []
   ],
@@ -75,6 +86,18 @@
                         "key": {
                           "vec": [
                             {
+                              "symbol": "BaseURI"
+                            }
+                          ]
+                        },
+                        "val": {
+                          "string": "https://api.ecostellar.com/trees/"
+                        }
+                      },
+                      {
+                        "key": {
+                          "vec": [
+                            {
                               "symbol": "Initialized"
                             }
                           ]
@@ -87,7 +110,31 @@
                         "key": {
                           "vec": [
                             {
-                              "symbol": "NFTCounter"
+                              "symbol": "Name"
+                            }
+                          ]
+                        },
+                        "val": {
+                          "string": "EcoStellar Tree Certificates"
+                        }
+                      },
+                      {
+                        "key": {
+                          "vec": [
+                            {
+                              "symbol": "Symbol"
+                            }
+                          ]
+                        },
+                        "val": {
+                          "string": "TREE"
+                        }
+                      },
+                      {
+                        "key": {
+                          "vec": [
+                            {
+                              "symbol": "TotalSupply"
                             }
                           ]
                         },
@@ -181,7 +228,20 @@
               }
             ],
             "data": {
-              "address": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFCT4"
+              "vec": [
+                {
+                  "address": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFCT4"
+                },
+                {
+                  "string": "EcoStellar Tree Certificates"
+                },
+                {
+                  "string": "TREE"
+                },
+                {
+                  "string": "https://api.ecostellar.com/trees/"
+                }
+              ]
             }
           }
         }
@@ -198,13 +258,17 @@
             "topics": [
               {
                 "symbol": "init"
-              },
-              {
-                "address": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFCT4"
               }
             ],
             "data": {
-              "symbol": "TreeNFT"
+              "vec": [
+                {
+                  "string": "EcoStellar Tree Certificates"
+                },
+                {
+                  "string": "TREE"
+                }
+              ]
             }
           }
         }
@@ -247,7 +311,7 @@
                 "bytes": "0000000000000000000000000000000000000000000000000000000000000001"
               },
               {
-                "symbol": "get_admin"
+                "symbol": "admin"
               }
             ],
             "data": "void"
@@ -268,7 +332,7 @@
                 "symbol": "fn_return"
               },
               {
-                "symbol": "get_admin"
+                "symbol": "admin"
               }
             ],
             "data": {
@@ -294,7 +358,7 @@
                 "bytes": "0000000000000000000000000000000000000000000000000000000000000001"
               },
               {
-                "symbol": "get_total_trees_minted"
+                "symbol": "name"
               }
             ],
             "data": "void"
@@ -315,7 +379,101 @@
                 "symbol": "fn_return"
               },
               {
-                "symbol": "get_total_trees_minted"
+                "symbol": "name"
+              }
+            ],
+            "data": {
+              "string": "EcoStellar Tree Certificates"
+            }
+          }
+        }
+      },
+      "failed_call": false
+    },
+    {
+      "event": {
+        "ext": "v0",
+        "contract_id": null,
+        "type_": "diagnostic",
+        "body": {
+          "v0": {
+            "topics": [
+              {
+                "symbol": "fn_call"
+              },
+              {
+                "bytes": "0000000000000000000000000000000000000000000000000000000000000001"
+              },
+              {
+                "symbol": "symbol"
+              }
+            ],
+            "data": "void"
+          }
+        }
+      },
+      "failed_call": false
+    },
+    {
+      "event": {
+        "ext": "v0",
+        "contract_id": "0000000000000000000000000000000000000000000000000000000000000001",
+        "type_": "diagnostic",
+        "body": {
+          "v0": {
+            "topics": [
+              {
+                "symbol": "fn_return"
+              },
+              {
+                "symbol": "symbol"
+              }
+            ],
+            "data": {
+              "string": "TREE"
+            }
+          }
+        }
+      },
+      "failed_call": false
+    },
+    {
+      "event": {
+        "ext": "v0",
+        "contract_id": null,
+        "type_": "diagnostic",
+        "body": {
+          "v0": {
+            "topics": [
+              {
+                "symbol": "fn_call"
+              },
+              {
+                "bytes": "0000000000000000000000000000000000000000000000000000000000000001"
+              },
+              {
+                "symbol": "total_supply"
+              }
+            ],
+            "data": "void"
+          }
+        }
+      },
+      "failed_call": false
+    },
+    {
+      "event": {
+        "ext": "v0",
+        "contract_id": "0000000000000000000000000000000000000000000000000000000000000001",
+        "type_": "diagnostic",
+        "body": {
+          "v0": {
+            "topics": [
+              {
+                "symbol": "fn_return"
+              },
+              {
+                "symbol": "total_supply"
               }
             ],
             "data": {
