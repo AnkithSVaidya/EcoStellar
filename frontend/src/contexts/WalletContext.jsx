@@ -104,11 +104,11 @@ export const WalletProvider = ({ children }) => {
   // Auto-connect on mount if previously connected
   useEffect(() => {
     const savedAddress = localStorage.getItem('walletAddress')
-    if (savedAddress && isFreighterInstalled()) {
-      connectWallet().catch(err => {
-        console.log('Auto-connect failed:', err)
-        localStorage.removeItem('walletAddress')
-      })
+    if (savedAddress) {
+      // Just set the address from localStorage (simulation mode)
+      setAddress(savedAddress)
+      setIsConnected(true)
+      setBalance(100.50) // Mock balance
     }
   }, [])
 

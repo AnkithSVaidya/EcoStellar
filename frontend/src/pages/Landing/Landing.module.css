@@ -107,11 +107,20 @@
   border: 1px solid rgba(0, 200, 83, 0.3);
   border-radius: var(--radius-md);
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
 }
 
 .entryFeeLabel strong {
   color: var(--color-primary);
   font-size: 1.25rem;
+}
+
+.stellarBadge {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.7);
+  font-weight: normal;
 }
 
 .entryStatus {
@@ -162,6 +171,306 @@
   border: 1px solid rgba(255, 107, 107, 0.3);
   border-radius: var(--radius-sm);
   text-align: center;
+}
+
+/* Payment Options */
+.paymentOptions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+  width: 100%;
+}
+
+.paymentTitle {
+  font-size: 1.125rem;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: var(--spacing-md);
+  text-align: center;
+}
+
+.paymentMethod {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  transition: all 0.3s ease;
+}
+
+.paymentMethod:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: var(--color-primary);
+  transform: translateY(-2px);
+}
+
+.methodHeader {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.methodIcon {
+  font-size: 1.5rem;
+}
+
+.methodLabel {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: white;
+}
+
+.methodDesc {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.95rem;
+  margin: 0;
+}
+
+.dividerOr {
+  text-align: center;
+  position: relative;
+  margin: var(--spacing-md) 0;
+}
+
+.dividerOr::before,
+.dividerOr::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  width: 40%;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.dividerOr::before {
+  left: 0;
+}
+
+.dividerOr::after {
+  right: 0;
+}
+
+.dividerOr span {
+  background: var(--color-bg-primary);
+  padding: 0 var(--spacing-md);
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+/* MoneyGram Modal */
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: var(--spacing-lg);
+}
+
+.moneyGramModal {
+  background: linear-gradient(135deg, #1a1a1a 0%, #0d1f14 100%);
+  border: 2px solid var(--color-primary);
+  border-radius: var(--radius-xl);
+  max-width: 700px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  box-shadow: 0 20px 60px rgba(0, 200, 83, 0.3);
+}
+
+.closeButton {
+  position: absolute;
+  top: var(--spacing-md);
+  right: var(--spacing-md);
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: white;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  font-size: 1.5rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s;
+  z-index: 1;
+}
+
+.closeButton:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: rotate(90deg);
+}
+
+.modalHeader {
+  background: linear-gradient(135deg, var(--color-primary) 0%, #00d455 100%);
+  padding: var(--spacing-2xl);
+  text-align: center;
+  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+}
+
+.modalHeader h2 {
+  margin: 0;
+  font-size: 2rem;
+  color: white;
+  margin-bottom: var(--spacing-sm);
+}
+
+.modalSubtitle {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 1.125rem;
+}
+
+.usdcNote {
+  margin: var(--spacing-sm) 0 0 0;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.95rem;
+  font-style: italic;
+}
+
+.modalBody {
+  padding: var(--spacing-2xl);
+}
+
+.moneyGramSteps {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xl);
+  margin-bottom: var(--spacing-2xl);
+}
+
+.step {
+  display: flex;
+  gap: var(--spacing-lg);
+  align-items: flex-start;
+}
+
+.stepNumber {
+  background: var(--color-primary);
+  color: white;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  font-weight: 800;
+  flex-shrink: 0;
+}
+
+.stepContent {
+  flex: 1;
+}
+
+.stepContent h3 {
+  margin: 0 0 var(--spacing-sm) 0;
+  color: white;
+  font-size: 1.25rem;
+}
+
+.stepContent p {
+  margin: var(--spacing-xs) 0;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.stepContent strong {
+  color: var(--color-primary);
+}
+
+.assetInfo {
+  background: rgba(0, 0, 0, 0.3);
+  padding: var(--spacing-sm);
+  border-radius: var(--radius-sm);
+  margin-top: var(--spacing-sm) !important;
+  border-left: 2px solid var(--color-primary);
+}
+
+.assetInfo small {
+  font-family: monospace;
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.6);
+  word-break: break-all;
+}
+
+.walletAddressBox {
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(0, 200, 83, 0.3);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-md);
+  margin-top: var(--spacing-sm);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.walletAddressBox code {
+  flex: 1;
+  color: var(--color-primary);
+  font-size: 0.9rem;
+  word-break: break-all;
+}
+
+.copyBtn {
+  background: rgba(0, 200, 83, 0.2);
+  border: 1px solid var(--color-primary);
+  color: var(--color-primary);
+  padding: var(--spacing-sm);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-size: 1.125rem;
+  transition: all 0.3s;
+}
+
+.copyBtn:hover {
+  background: var(--color-primary);
+  color: white;
+}
+
+.moneyGramFooter {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: var(--spacing-lg);
+  text-align: center;
+}
+
+.poweredBy {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+  margin-bottom: var(--spacing-md);
+}
+
+.poweredBy span {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.875rem;
+}
+
+.poweredBy strong {
+  color: var(--color-primary);
+  font-size: 1.125rem;
+}
+
+.learnMore {
+  color: var(--color-primary);
+  text-decoration: none;
+  font-size: 0.95rem;
+  transition: opacity 0.3s;
+}
+
+.learnMore:hover {
+  opacity: 0.8;
+  text-decoration: underline;
 }
 
 .stats {

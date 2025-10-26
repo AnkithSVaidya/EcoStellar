@@ -125,6 +125,224 @@
   font-size: 1.25rem;
 }
 
+/* Minted NFTs Section */
+.mintedSection {
+  padding: var(--spacing-2xl) 0;
+  margin-bottom: var(--spacing-2xl);
+}
+
+.sectionTitle {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: var(--spacing-2xl);
+  color: var(--color-primary);
+}
+
+.nftGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: var(--spacing-xl);
+}
+
+.nftCard {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(10px);
+  border: 2px solid var(--color-primary);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition: all 0.3s;
+}
+
+.nftCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(0, 200, 83, 0.3);
+}
+
+.nftHeader {
+  background: linear-gradient(135deg, var(--color-primary) 0%, #00d455 100%);
+  padding: var(--spacing-md);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nftBadge {
+  background: rgba(255, 255, 255, 0.3);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--radius-sm);
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: white;
+}
+
+.nftId {
+  font-family: monospace;
+  color: white;
+  font-size: 0.875rem;
+}
+
+.nftBody {
+  padding: var(--spacing-lg);
+}
+
+.nftSpecies {
+  font-size: 1.5rem;
+  margin: 0 0 var(--spacing-md) 0;
+  color: white;
+}
+
+.nftDetail {
+  display: flex;
+  justify-content: space-between;
+  padding: var(--spacing-sm) 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.nftLabel {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.875rem;
+}
+
+.nftValue {
+  color: white;
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-align: right;
+}
+
+.nftFooter {
+  padding: var(--spacing-md);
+  background: rgba(0, 0, 0, 0.2);
+}
+
+/* Mint Modal */
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.9);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  padding: var(--spacing-lg);
+}
+
+.mintModal {
+  background: linear-gradient(135deg, #1a1a1a 0%, #0d1f14 100%);
+  border: 2px solid var(--color-primary);
+  border-radius: var(--radius-xl);
+  max-width: 900px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+}
+
+.closeBtn {
+  position: absolute;
+  top: var(--spacing-md);
+  right: var(--spacing-md);
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  color: white;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  font-size: 1.5rem;
+  cursor: pointer;
+  z-index: 1;
+  transition: all 0.3s;
+}
+
+.closeBtn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: rotate(90deg);
+}
+
+.mintModalHeader {
+  background: linear-gradient(135deg, var(--color-primary) 0%, #00d455 100%);
+  padding: var(--spacing-2xl);
+  text-align: center;
+}
+
+.mintModalHeader h2 {
+  margin: 0 0 var(--spacing-sm) 0;
+  color: white;
+  font-size: 2rem;
+}
+
+.mintModalHeader p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 1.125rem;
+}
+
+.mintModalBody {
+  padding: var(--spacing-2xl);
+}
+
+.mintInstruction {
+  text-align: center;
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: var(--spacing-xl);
+  font-size: 1.125rem;
+}
+
+.locationGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-lg);
+}
+
+.locationCard {
+  background: rgba(255, 255, 255, 0.05);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-lg);
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.locationCard:hover {
+  border-color: var(--color-primary);
+  background: rgba(0, 200, 83, 0.1);
+}
+
+.locationCard.selected {
+  border-color: var(--color-primary);
+  background: rgba(0, 200, 83, 0.15);
+  box-shadow: 0 0 20px rgba(0, 200, 83, 0.3);
+}
+
+.locationIcon {
+  font-size: 3rem;
+  margin-bottom: var(--spacing-sm);
+}
+
+.locationCard h4 {
+  margin: 0 0 var(--spacing-sm) 0;
+  color: var(--color-primary);
+  font-size: 1.125rem;
+}
+
+.locationName {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.875rem;
+  margin: var(--spacing-xs) 0;
+}
+
+.locationCo2 {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.875rem;
+  margin: var(--spacing-xs) 0;
+}
+
 /* Header Section */
 .header {
   text-align: center;

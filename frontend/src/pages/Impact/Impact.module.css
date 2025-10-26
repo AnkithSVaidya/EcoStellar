@@ -43,6 +43,43 @@
   border-left: 1px solid rgba(255, 255, 255, 0.1);
   overflow-y: auto;
   z-index: 5;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Tab Navigation */
+.tabNav {
+  display: flex;
+  gap: 0;
+  background: rgba(0, 0, 0, 0.5);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.tabButton {
+  flex: 1;
+  padding: var(--spacing-lg);
+  background: transparent;
+  border: none;
+  color: var(--color-text-secondary);
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-bottom: 3px solid transparent;
+}
+
+.tabButton:hover {
+  background: rgba(0, 200, 83, 0.1);
+  color: var(--color-primary);
+}
+
+.tabButton.active {
+  color: var(--color-primary);
+  border-bottom-color: var(--color-primary);
+  background: rgba(0, 200, 83, 0.05);
 }
 
 .sidebarContent {
@@ -50,6 +87,7 @@
   display: flex;
   flex-direction: column;
   gap: var(--spacing-lg);
+  flex: 1;
 }
 
 /* Stats Cards */
@@ -264,4 +302,191 @@
     height: auto;
     max-height: 50vh;
   }
+}
+
+/* Pulse animation for minted NFT locations */
+@keyframes mintedPulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.2);
+  }
+}
+
+.mintedMarker {
+  animation: mintedPulse 2s ease-in-out infinite;
+}
+
+/* NGO Tab Styles */
+.ngoContainer {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+.ngoHeader {
+  margin-bottom: var(--spacing-md);
+}
+
+.ngoSubtitle {
+  color: var(--color-text-secondary);
+  font-size: 0.9rem;
+  margin-top: var(--spacing-sm);
+  line-height: 1.5;
+}
+
+.ngoList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+.ngoCard {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-lg);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.ngoCard:hover {
+  border-color: var(--color-primary);
+  box-shadow: 0 8px 32px rgba(0, 200, 83, 0.2);
+}
+
+.ngoCardHeader {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-md);
+}
+
+.ngoIcon {
+  font-size: 2.5rem;
+  line-height: 1;
+}
+
+.ngoInfo {
+  flex: 1;
+}
+
+.ngoName {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--color-text);
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+}
+
+.verifiedBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  background: var(--color-primary);
+  color: #000;
+  border-radius: 50%;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.ngoLocation {
+  font-size: 0.85rem;
+  color: var(--color-text-secondary);
+  margin: var(--spacing-xs) 0 0;
+}
+
+.ngoDescription {
+  font-size: 0.9rem;
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+  margin-bottom: var(--spacing-md);
+}
+
+.ngoStats {
+  display: flex;
+  gap: var(--spacing-lg);
+  margin-bottom: var(--spacing-md);
+  padding: var(--spacing-md);
+  background: rgba(0, 200, 83, 0.05);
+  border-radius: var(--radius-md);
+}
+
+.ngoStat {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.ngoStatIcon {
+  font-size: 1.5rem;
+}
+
+.ngoStatValue {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  line-height: 1;
+}
+
+.ngoStatLabel {
+  font-size: 0.75rem;
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.ngoWallet {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-sm);
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--spacing-md);
+}
+
+.walletLabel {
+  font-size: 0.75rem;
+  color: var(--color-text-secondary);
+  white-space: nowrap;
+}
+
+.walletAddress {
+  font-size: 0.8rem;
+  color: var(--color-primary);
+  font-family: 'Courier New', monospace;
+  background: rgba(0, 200, 83, 0.1);
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+.donateButton {
+  width: 100%;
+  padding: var(--spacing-md);
+  background: linear-gradient(135deg, var(--color-primary) 0%, #00C853 100%);
+  color: #000;
+  border: none;
+  border-radius: var(--radius-md);
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.donateButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 200, 83, 0.4);
+}
+
+.donateButton:active {
+  transform: translateY(0);
 }

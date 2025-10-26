@@ -16,20 +16,24 @@ const WalletConnect = () => {
   
   const { success, error } = useToast()
   const [showDropdown, setShowDropdown] = useState(false)
+  const [showManualInput, setShowManualInput] = useState(false)
+  const [manualAddress, setManualAddress] = useState('')
 
   const handleConnect = async () => {
-    if (!isFreighterInstalled()) {
-      error('Please install Freighter wallet extension from freighter.app')
-      // Don't auto-open the page, just show the error
+    // Show manual input instead of trying Freighter
+    setShowManualInput(true)
+  }
+
+  const handleManualConnect = () => {
+    if (!manualAddress.trim()) {
+      error('Please enter a wallet address')
       return
     }
-
-    try {
-      await connectWallet()
-      success('Wallet connected successfully!')
-    } catch (err) {
-      error(err.message || 'Failed to connect wallet')
-    }
+    
+    // Simulate connection with manual address
+    localStorage.setItem('walletAddress', manualAddress)
+    window.location.reload() // Reload to trigger connection
+    success('Wallet connected successfully!')
   }
 
   const handleDisconnect = () => {
@@ -59,10 +63,36 @@ const WalletConnect = () => {
 
   if (!isConnected) {
     return (
-      <button className={styles.btn} onClick={handleConnect}>
-        <span className={styles.icon}>🔗</span>
-        Connect Wallet
-      </button>
+      <>
+        <button className={styles.btn} onClick={handleConnect}>
+          <span className={styles.icon}>🔗</span>
+          Connect Wallet
+        </button>
+        
+        {showManualInput && (
+          <div className={styles.manualInputOverlay} onClick={() => setShowManualInput(false)}>
+            <div className={styles.manualInputBox} onClick={(e) => e.stopPropagation()}>
+              <h3>Enter Wallet Address</h3>
+              <input
+                type="text"
+                placeholder="G... (Stellar address)"
+                value={manualAddress}
+                onChange={(e) => setManualAddress(e.target.value)}
+                className={styles.addressInput}
+                autoFocus
+              />
+              <div className={styles.manualInputActions}>
+                <button className="btn btn-primary" onClick={handleManualConnect}>
+                  Connect
+                </button>
+                <button className="btn btn-outline" onClick={() => setShowManualInput(false)}>
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+      </>
     )
   }
 

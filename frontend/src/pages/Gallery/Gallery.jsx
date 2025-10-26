@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { useWallet } from '../../contexts/WalletContext'
 import NFTCard from '../../components/NFTCard/NFTCard'
-import MintModal from '../../components/MintModal/MintModal'
 import { mockNFTs, filterNFTs, sortNFTs, getContinents } from '../../data/treeNFTs'
 import styles from './Gallery.module.css'
 
@@ -11,7 +10,6 @@ const Gallery = () => {
   const { walletAddress, isConnected } = useWallet()
   const [nfts, setNfts] = useState(mockNFTs)
   const [displayedNFTs, setDisplayedNFTs] = useState(mockNFTs)
-  const [isMintModalOpen, setIsMintModalOpen] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   
   // Player stats (mock - replace with API)
@@ -24,6 +22,19 @@ const Gallery = () => {
   const [showEarningMessage, setShowEarningMessage] = useState(false)
   const [lastEarning, setLastEarning] = useState(0)
   
+  // Minting state
+  const [showMintModal, setShowMintModal] = useState(false)
+  const [availableLocations, setAvailableLocations] = useState([
+    { id: 1, location: 'Amazon Rainforest, Brazil', lat: -3.4653, lng: -62.2159, species: 'Mahogany', co2: 850 },
+    { id: 2, location: 'Borneo Forest, Indonesia', lat: 0.9619, lng: 114.5548, species: 'Dipterocarp', co2: 920 },
+    { id: 3, location: 'Congo Basin, DR Congo', lat: -0.7264, lng: 23.6566, species: 'African Teak', co2: 780 },
+    { id: 4, location: 'Redwood National Park, USA', lat: 41.2132, lng: -124.0046, species: 'Redwood', co2: 1200 },
+    { id: 5, location: 'Black Forest, Germany', lat: 48.3233, lng: 8.1981, species: 'Black Pine', co2: 650 },
+    { id: 6, location: 'Great Bear Rainforest, Canada', lat: 52.0096, lng: -127.6476, species: 'Sitka Spruce', co2: 890 },
+  ])
+  const [mintedNFTs, setMintedNFTs] = useState([])
+  const [selectedLocation, setSelectedLocation] = useState(null)
+  
   // Filter and sort state
   const [filters, setFilters] = useState({
     species: '',
@@ -33,6 +44,14 @@ const Gallery = () => {
     search: ''
   })
   const [sortBy, setSortBy] = useState('newest')
+
+  // Load minted NFTs from localStorage
+  useEffect(() => {
+    const stored = localStorage.getItem('minted_nfts')
+    if (stored) {
+      setMintedNFTs(JSON.parse(stored))
+    }
+  }, [])
 
   // Apply filters and sorting
   useEffect(() => {
@@ -54,12 +73,6 @@ const Gallery = () => {
       search: ''
     })
   }
-
-  const handleMintSuccess = (newNFT, cost) => {
-    setNfts(prev => [newNFT, ...prev])
-    setPlayerTokens(prev => prev - cost)
-  }
-
   // Handle verification
   const handleVerify = () => {
     if (verificationsRemaining <= 0) return
@@ -77,7 +90,38 @@ const Gallery = () => {
       
       // Hide message after 3 seconds
       setTimeout(() => setShowEarningMessage(false), 3000)
+      
+      // After completing all verifications, show mint option
+      if (verificationsRemaining - 1 === 0) {
+        setTimeout(() => setShowMintModal(true), 3500)
+      }
     }, 1000)
+  }
+
+  // Handle minting NFT
+  const handleMintNFT = () => {
+    if (!selectedLocation) return
+    
+    const location = availableLocations.find(loc => loc.id === selectedLocation)
+    const newNFT = {
+      id: Date.now(),
+      ...location,
+      mintedAt: new Date().toISOString(),
+      ngo: 'EcoStellar Partner NGO',
+      certificateId: `TREE-${Math.random().toString(36).substr(2, 9).toUpperCase()}`
+    }
+    
+    const updatedNFTs = [newNFT, ...mintedNFTs]
+    setMintedNFTs(updatedNFTs)
+    
+    // Save to localStorage for Impact page globe
+    localStorage.setItem('minted_nfts', JSON.stringify(updatedNFTs))
+    
+    setShowMintModal(false)
+    setSelectedLocation(null)
+    
+    // Remove the location from available locations
+    setAvailableLocations(prev => prev.filter(loc => loc.id !== selectedLocation))
   }
 
   const continents = getContinents(nfts)
@@ -104,11 +148,11 @@ const Gallery = () => {
                 </div>
                 <div className={styles.statBox}>
                   <span className={styles.statLabel}>Earn Per Verification</span>
-                  <span className={styles.statValue}>$0.75</span>
+                  <span className={styles.statValue}>💵 0.75 USDC</span>
                 </div>
                 <div className={styles.statBox}>
                   <span className={styles.statLabel}>Potential Earnings</span>
-                  <span className={styles.statValue}>${(verificationsRemaining * 0.75).toFixed(2)}</span>
+                  <span className={styles.statValue}>💵 {(verificationsRemaining * 0.75).toFixed(2)} USDC</span>
                 </div>
               </div>
               
@@ -127,19 +171,114 @@ const Gallery = () => {
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0 }}
                 >
-                  💰 ${lastEarning.toFixed(2)} deposited to your account!
+                  💰 {lastEarning.toFixed(2)} USDC deposited to your account!
                 </motion.div>
               )}
               
               {totalEarnings > 0 && (
                 <div className={styles.totalEarnings}>
-                  <strong>Total Earned:</strong> ${totalEarnings.toFixed(2)}
+                  <strong>Total Earned:</strong> 💵 {totalEarnings.toFixed(2)} USDC
                 </div>
               )}
             </div>
           </motion.div>
         </div>
       </div>
+
+      {/* Minted NFTs Section */}
+      {mintedNFTs.length > 0 && (
+        <div className={styles.mintedSection}>
+          <div className="container">
+            <h2 className={styles.sectionTitle}>🌳 Your Verified Tree NFTs</h2>
+            <div className={styles.nftGrid}>
+              {mintedNFTs.map(nft => (
+                <motion.div
+                  key={nft.id}
+                  className={styles.nftCard}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.5 }}
+                >
+                  <div className={styles.nftHeader}>
+                    <span className={styles.nftBadge}>✅ VERIFIED</span>
+                    <span className={styles.nftId}>#{nft.certificateId}</span>
+                  </div>
+                  <div className={styles.nftBody}>
+                    <h3 className={styles.nftSpecies}>🌲 {nft.species}</h3>
+                    <div className={styles.nftDetail}>
+                      <span className={styles.nftLabel}>📍 Location:</span>
+                      <span className={styles.nftValue}>{nft.location}</span>
+                    </div>
+                    <div className={styles.nftDetail}>
+                      <span className={styles.nftLabel}>🌍 Coordinates:</span>
+                      <span className={styles.nftValue}>{nft.lat.toFixed(4)}, {nft.lng.toFixed(4)}</span>
+                    </div>
+                    <div className={styles.nftDetail}>
+                      <span className={styles.nftLabel}>💨 CO₂ Offset:</span>
+                      <span className={styles.nftValue}>{nft.co2} kg/year</span>
+                    </div>
+                    <div className={styles.nftDetail}>
+                      <span className={styles.nftLabel}>🏢 NGO Partner:</span>
+                      <span className={styles.nftValue}>{nft.ngo}</span>
+                    </div>
+                    <div className={styles.nftDetail}>
+                      <span className={styles.nftLabel}>📅 Minted:</span>
+                      <span className={styles.nftValue}>{new Date(nft.mintedAt).toLocaleDateString()}</span>
+                    </div>
+                  </div>
+                  <div className={styles.nftFooter}>
+                    <button className="btn btn-outline btn-sm">View on Explorer</button>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Mint Modal */}
+      {showMintModal && (
+        <div className={styles.modalOverlay} onClick={() => setShowMintModal(false)}>
+          <div className={styles.mintModal} onClick={(e) => e.stopPropagation()}>
+            <button className={styles.closeBtn} onClick={() => setShowMintModal(false)}>✕</button>
+            
+            <div className={styles.mintModalHeader}>
+              <h2>🎉 All Verifications Complete!</h2>
+              <p>Choose a location to mint your Tree NFT certificate</p>
+            </div>
+            
+            <div className={styles.mintModalBody}>
+              <p className={styles.mintInstruction}>
+                These are NGO locations awaiting certification. Select one to mint your NFT:
+              </p>
+              
+              <div className={styles.locationGrid}>
+                {availableLocations.map(loc => (
+                  <div
+                    key={loc.id}
+                    className={`${styles.locationCard} ${selectedLocation === loc.id ? styles.selected : ''}`}
+                    onClick={() => setSelectedLocation(loc.id)}
+                  >
+                    <div className={styles.locationIcon}>🌳</div>
+                    <h4>{loc.species}</h4>
+                    <p className={styles.locationName}>📍 {loc.location}</p>
+                    <p className={styles.locationCo2}>💨 {loc.co2} kg CO₂/year</p>
+                  </div>
+                ))}
+              </div>
+              
+              <button
+                className="btn btn-primary btn-lg"
+                onClick={handleMintNFT}
+                disabled={!selectedLocation}
+                style={{ width: '100%', marginTop: '20px' }}
+              >
+                {selectedLocation ? '✨ Mint Tree NFT Certificate' : 'Select a Location'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Header */}
       <div className={styles.header}>
@@ -156,14 +295,6 @@ const Gallery = () => {
                 Your collection of authenticated tree planting certificates on the Stellar blockchain
               </p>
             </div>
-            <button 
-              className={`btn btn-primary btn-lg ${styles.mintButton}`}
-              onClick={() => setIsMintModalOpen(true)}
-              disabled={!isConnected}
-            >
-              <span className={styles.mintIcon}>🌱</span>
-              Mint New Tree NFT
-            </button>
           </motion.div>
         </div>
       </div>
@@ -357,14 +488,6 @@ const Gallery = () => {
           </div>
         </div>
       )}
-
-      {/* Mint Modal */}
-      <MintModal
-        isOpen={isMintModalOpen}
-        onClose={() => setIsMintModalOpen(false)}
-        onMintSuccess={handleMintSuccess}
-        playerTokens={playerTokens}
-      />
     </div>
   )
 }

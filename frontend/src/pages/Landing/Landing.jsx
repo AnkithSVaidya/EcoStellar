@@ -14,6 +14,7 @@ const Landing = () => {
   const [playersInRound, setPlayersInRound] = useState(47)
   const [isPayingEntry, setIsPayingEntry] = useState(false)
   const [paymentError, setPaymentError] = useState(null)
+  const [showMoneyGramModal, setShowMoneyGramModal] = useState(false)
 
   // Animated counter function
   const animateCounter = (target, setter, duration = 2000) => {
@@ -111,10 +112,42 @@ const Landing = () => {
               <div className={styles.entrySection}>
                 <div className={styles.entryFeeLabel}>
                   💰 Entry Fee: <strong>1 USDC</strong> per game
+                  <span className={styles.stellarBadge}>⭐ Stellar USDC</span>
                 </div>
                 
                 {!isConnected ? (
-                  <WalletConnect />
+                  <>
+                    <div className={styles.paymentOptions}>
+                      <h3 className={styles.paymentTitle}>Choose Payment Method:</h3>
+                      
+                      <div className={styles.paymentMethod}>
+                        <div className={styles.methodHeader}>
+                          <span className={styles.methodIcon}>🔗</span>
+                          <span className={styles.methodLabel}>Option 1: Freighter Wallet</span>
+                        </div>
+                        <p className={styles.methodDesc}>If you have crypto</p>
+                        <WalletConnect />
+                      </div>
+                      
+                      <div className={styles.dividerOr}>
+                        <span>OR</span>
+                      </div>
+                      
+                      <div className={styles.paymentMethod}>
+                        <div className={styles.methodHeader}>
+                          <span className={styles.methodIcon}>💵</span>
+                          <span className={styles.methodLabel}>Option 2: MoneyGram Cash</span>
+                        </div>
+                        <p className={styles.methodDesc}>Deposit cash, get USDC on Stellar</p>
+                        <button 
+                          className="btn btn-secondary btn-lg"
+                          onClick={() => setShowMoneyGramModal(true)}
+                        >
+                          💵 Pay with MoneyGram Cash
+                        </button>
+                      </div>
+                    </div>
+                  </>
                 ) : !entryPaid ? (
                   <>
                     <button 
@@ -400,6 +433,104 @@ const Landing = () => {
           </motion.div>
         </div>
       </section>
+
+      {/* MoneyGram Modal */}
+      {showMoneyGramModal && (
+        <div className={styles.modalOverlay} onClick={() => setShowMoneyGramModal(false)}>
+          <div className={styles.moneyGramModal} onClick={(e) => e.stopPropagation()}>
+            <button 
+              className={styles.closeButton}
+              onClick={() => setShowMoneyGramModal(false)}
+            >
+              ✕
+            </button>
+            
+            <div className={styles.modalHeader}>
+              <h2>💵 DEPOSIT CASH VIA MONEYGRAM</h2>
+              <p className={styles.modalSubtitle}>Get USDC on Stellar in minutes</p>
+              <p className={styles.usdcNote}>
+                🌟 Using Stellar's native USDC asset
+              </p>
+            </div>
+            
+            <div className={styles.modalBody}>
+              <div className={styles.moneyGramSteps}>
+                <div className={styles.step}>
+                  <div className={styles.stepNumber}>1</div>
+                  <div className={styles.stepContent}>
+                    <h3>Find Nearest MoneyGram Location</h3>
+                    <a 
+                      href="https://www.moneygram.com/mgo/us/en/locations" 
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="btn btn-outline"
+                    >
+                      📍 Show Map / Location Finder
+                    </a>
+                  </div>
+                </div>
+                
+                <div className={styles.step}>
+                  <div className={styles.stepNumber}>2</div>
+                  <div className={styles.stepContent}>
+                    <h3>Say: "Deposit to Stellar"</h3>
+                    <p>Provide your wallet address:</p>
+                    <div className={styles.walletAddressBox}>
+                      <code>{address || 'Connect wallet first to see address'}</code>
+                      {address && (
+                        <button 
+                          className={styles.copyBtn}
+                          onClick={() => {
+                            navigator.clipboard.writeText(address)
+                            alert('Address copied!')
+                          }}
+                        >
+                          📋
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                </div>
+                
+                <div className={styles.step}>
+                  <div className={styles.stepNumber}>3</div>
+                  <div className={styles.stepContent}>
+                    <h3>Deposit $2 Cash</h3>
+                    <p>MoneyGram converts to <strong>USDC on Stellar</strong> automatically</p>
+                    <p>⚡ Arrives in 2-5 minutes</p>
+                    <p className={styles.assetInfo}>
+                      <small>Asset: USDC:GA5ZSEJYB37JRC5AVCIA5MOP4RHTM335X2KGX3IHOJAPP5RE34K4KZVN</small>
+                    </p>
+                  </div>
+                </div>
+                
+                <div className={styles.step}>
+                  <div className={styles.stepNumber}>4</div>
+                  <div className={styles.stepContent}>
+                    <h3>Return Here and Play!</h3>
+                    <p>Your USDC will be ready in your Stellar wallet</p>
+                  </div>
+                </div>
+              </div>
+              
+              <div className={styles.moneyGramFooter}>
+                <div className={styles.poweredBy}>
+                  <span>Powered by</span>
+                  <strong>Stellar + MoneyGram</strong>
+                </div>
+                <a 
+                  href="https://stellar.org/learn/anchor-basics" 
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={styles.learnMore}
+                >
+                  📚 Learn More About Stellar Anchors
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
