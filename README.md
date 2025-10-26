@@ -15,6 +15,14 @@ PORT=3001 npm run dev
 
 A Stellar/Soroban smart contract platform for the EcoQuest gaming ecosystem.
 
+
+# what I am using stellar for
+
+# Stellar	SDK validates address format
+# Stellar	Horizon API checks existence
+# Stellar fetched balance 
+# Stellar	Polls Horizon every 30s
+
 ## 🎮 About
 
 EcoStellar provides blockchain-powered token infrastructure for the EcoQuest gaming platform, enabling:
