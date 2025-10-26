@@ -6,10 +6,14 @@ import WalletConnect from '../../components/WalletConnect/WalletConnect'
 import styles from './Landing.module.css'
 
 const Landing = () => {
-  const { isConnected } = useWallet()
+  const { isConnected, address } = useWallet()
   const [treesPlanted, setTreesPlanted] = useState(0)
   const [co2Offset, setCo2Offset] = useState(0)
   const [activePlayers, setActivePlayers] = useState(0)
+  const [entryPaid, setEntryPaid] = useState(false)
+  const [playersInRound, setPlayersInRound] = useState(47)
+  const [isPayingEntry, setIsPayingEntry] = useState(false)
+  const [paymentError, setPaymentError] = useState(null)
 
   // Animated counter function
   const animateCounter = (target, setter, duration = 2000) => {
@@ -43,6 +47,42 @@ const Landing = () => {
     }
   }, [])
 
+  // Check if entry fee was already paid
+  useEffect(() => {
+    if (address) {
+      const paidStatus = localStorage.getItem(`entry_paid_${address}`)
+      if (paidStatus === 'true') {
+        setEntryPaid(true)
+      }
+    }
+  }, [address])
+
+  // Handle entry fee payment (MOCK - no real deduction)
+  const handlePayEntryFee = async () => {
+    setIsPayingEntry(true)
+    setPaymentError(null)
+
+    try {
+      // Simulate payment processing
+      await new Promise(resolve => setTimeout(resolve, 1500))
+
+      // Mock success - just confirm wallet address is connected
+      if (address) {
+        setEntryPaid(true)
+        localStorage.setItem(`entry_paid_${address}`, 'true')
+        // Update players in round
+        setPlayersInRound(prev => prev + 1)
+      } else {
+        throw new Error('Wallet not connected')
+      }
+    } catch (error) {
+      console.error('Entry fee payment failed:', error)
+      setPaymentError(error.message)
+    } finally {
+      setIsPayingEntry(false)
+    }
+  }
+
   // Format number with commas
   const formatNumber = (num) => {
     return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
@@ -67,10 +107,47 @@ const Landing = () => {
               Play Carbon Dash, earn ECO tokens, and help plant real trees around the world.
             </p>
             <div className={styles.cta}>
-              <Link to="/game" className="btn btn-primary btn-lg">
-                🎮 Play Now
-              </Link>
-              <WalletConnect />
+              {/* Entry Fee Section */}
+              <div className={styles.entrySection}>
+                <div className={styles.entryFeeLabel}>
+                  💰 Entry Fee: <strong>1 USDC</strong> per game
+                </div>
+                
+                {!isConnected ? (
+                  <WalletConnect />
+                ) : !entryPaid ? (
+                  <>
+                    <button 
+                      className="btn btn-primary btn-lg"
+                      onClick={handlePayEntryFee}
+                      disabled={isPayingEntry}
+                    >
+                      {isPayingEntry ? '⏳ Processing Payment...' : '💳 Pay 1 USDC to Play'}
+                    </button>
+                    {paymentError && (
+                      <div className={styles.errorMessage}>
+                        ❌ {paymentError}
+                      </div>
+                    )}
+                  </>
+                ) : (
+                  <Link to="/game" className="btn btn-primary btn-lg">
+                    🎮 Start Playing
+                  </Link>
+                )}
+                
+                {/* Entry Status */}
+                <div className={styles.entryStatus}>
+                  <div className={styles.playerCount}>
+                    👥 Players in round: <strong>{playersInRound}/100</strong>
+                  </div>
+                  {entryPaid && (
+                    <div className={styles.entryConfirmed}>
+                      ✅ Your entry confirmed
+                    </div>
+                  )}
+                </div>
+              </div>
             </div>
             
             {/* Live Stats with Animated Counters */}

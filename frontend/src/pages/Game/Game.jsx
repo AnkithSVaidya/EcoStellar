@@ -23,6 +23,11 @@ const Game = () => {
   const [showConfetti, setShowConfetti] = useState(false)
   const [canMintNFT, setCanMintNFT] = useState(false)
   
+  // Leaderboard state
+  const [playerRank, setPlayerRank] = useState(0)
+  const [totalPlayers, setTotalPlayers] = useState(100)
+  const [isQualified, setIsQualified] = useState(false)
+  
   // Modal state
   const [showGameOverModal, setShowGameOverModal] = useState(false)
   
@@ -52,6 +57,14 @@ const Game = () => {
         // Calculate tokens (10 points = 1 token)
         const tokens = Math.floor(data.score / 10)
         setTokensEarned(tokens)
+        
+        // MOCK: Always show qualified (top 25%) - rank between 1-25
+        const mockRank = Math.floor(Math.random() * 25) + 1
+        setPlayerRank(mockRank)
+        setTotalPlayers(100)
+        
+        // Always qualified for mock testing
+        setIsQualified(true)
         
         // Check if eligible for NFT (example: 100+ tokens)
         if (tokens >= 100) {
@@ -159,11 +172,20 @@ const Game = () => {
     setLives(3)
     setRewardsClaimed(false)
     setCanMintNFT(false)
+    setPlayerRank(0)
+    setIsQualified(false)
     
     // Reload iframe to restart game
     if (iframeRef.current) {
       iframeRef.current.src = iframeRef.current.src
     }
+  }
+
+  // Start verification job
+  const handleStartVerifying = () => {
+    info('Redirecting to verification dashboard...')
+    // Navigate to Gallery page where verification queue is
+    window.location.href = '/gallery'
   }
 
   // Mint NFT (placeholder)
@@ -359,53 +381,58 @@ const Game = () => {
                 </div>
                 
                 <div className={styles.tokensDisplay}>
-                  <span className={styles.tokensLabel}>ECO Tokens Earned</span>
+                  <span className={styles.tokensLabel}>You Earned</span>
                   <span className={styles.tokensAmount}>
-                    💎 {tokensEarned.toLocaleString()}
+                    💎 {tokensEarned.toLocaleString()} ECO Tokens
                   </span>
                 </div>
                 
-                {!rewardsClaimed && (
-                  <p className={styles.rewardMessage}>
-                    {isConnected 
-                      ? 'Claim your tokens to your wallet!' 
-                      : 'Connect your wallet to claim rewards'}
-                  </p>
-                )}
+                {/* Leaderboard Rank */}
+                <div className={styles.rankDisplay}>
+                  <span className={styles.rankLabel}>Your Rank</span>
+                  <span className={styles.rankValue}>
+                    #{playerRank} out of {totalPlayers}
+                  </span>
+                </div>
                 
-                {rewardsClaimed && (
-                  <div className={styles.successMessage}>
-                    <p>✅ Tokens successfully transferred to your wallet!</p>
-                    {canMintNFT && (
-                      <p className={styles.nftEligible}>
-                        🌳 You're eligible to mint a Tree NFT!
-                      </p>
-                    )}
+                {/* Qualification Results */}
+                {isQualified ? (
+                  <div className={styles.qualificationSuccess}>
+                    <div className={styles.qualificationIcon}>🎉</div>
+                    <h3 className={styles.qualificationTitle}>YOU QUALIFIED!</h3>
+                    <p className={styles.qualificationText}>
+                      You can verify NGO carbon records
+                    </p>
+                    <div className={styles.earningInfo}>
+                      <strong>Earn 0.75 USDC per verification</strong>
+                    </div>
+                  </div>
+                ) : (
+                  <div className={styles.qualificationFailed}>
+                    <div className={styles.failedIcon}>😔</div>
+                    <h3 className={styles.failedTitle}>You didn't qualify this round</h3>
+                    <p className={styles.failedText}>
+                      Top 25% get verification rights
+                    </p>
+                    <p className={styles.encouragementText}>
+                      Try again to earn higher rank!
+                    </p>
                   </div>
                 )}
               </div>
               
               <div className={styles.modalActions}>
-                {!rewardsClaimed ? (
+                {isQualified ? (
                   <>
                     <button
                       className="btn btn-primary btn-lg"
-                      onClick={handleClaimRewards}
-                      disabled={isClaimingRewards}
+                      onClick={handleStartVerifying}
                     >
-                      {isClaimingRewards ? (
-                        <>
-                          <Loading message="" />
-                          <span style={{ marginLeft: '8px' }}>Claiming...</span>
-                        </>
-                      ) : (
-                        '💰 Claim Rewards'
-                      )}
+                      🎯 START VERIFYING
                     </button>
                     <button
                       className="btn btn-outline"
                       onClick={handlePlayAgain}
-                      disabled={isClaimingRewards}
                     >
                       🔄 Play Again
                     </button>
@@ -416,19 +443,11 @@ const Game = () => {
                       className="btn btn-primary btn-lg"
                       onClick={handlePlayAgain}
                     >
-                      🔄 Play Again
+                      🔄 PLAY AGAIN
                     </button>
-                    <Link to="/impact" className="btn btn-secondary">
-                      🌍 View My Impact
+                    <Link to="/impact" className="btn btn-outline">
+                      📊 View Stats
                     </Link>
-                    {canMintNFT && (
-                      <button
-                        className="btn btn-outline"
-                        onClick={handleMintNFT}
-                      >
-                        🌳 Mint Tree NFT
-                      </button>
-                    )}
                   </>
                 )}
               </div>

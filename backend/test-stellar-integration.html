@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoStellar - Stellar Integration Test</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .status-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .status-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+
+        .status-online {
+            background: #10b981;
+            animation: pulse 2s infinite;
+        }
+
+        .status-offline {
+            background: #ef4444;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .test-section {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .test-section h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .test-section h2::before {
+            content: '🧪';
+            margin-right: 10px;
+            font-size: 1.5rem;
+        }
+
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        .result-box {
+            background: #f3f4f6;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .result-box pre {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        .success {
+            color: #10b981;
+            font-weight: bold;
+        }
+
+        .error {
+            color: #ef4444;
+            font-weight: bold;
+        }
+
+        .info {
+            color: #3b82f6;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .stat-card h3 {
+            font-size: 2rem;
+            margin-bottom: 5px;
+        }
+
+        .stat-card p {
+            opacity: 0.9;
+        }
+
+        .loading {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .endpoint-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .endpoint-list li {
+            padding: 10px;
+            margin: 5px 0;
+            background: #f9fafb;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+        }
+
+        .endpoint-list li::before {
+            content: '✓';
+            color: #10b981;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        .code {
+            background: #1f2937;
+            color: #10b981;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: monospace;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🌟 EcoStellar Stellar Integration Test</h1>
+            <p>Test the Stellar blockchain integration on localhost:4000</p>
+        </div>
+
+        <!-- Server Status -->
+        <div class="status-card">
+            <h3>Server Status</h3>
+            <div id="serverStatus">
+                <span class="status-indicator status-offline"></span>
+                <span>Checking...</span>
+            </div>
+            <div id="stellarStatus" style="margin-top: 10px; font-size: 0.9rem;"></div>
+        </div>
+
+        <!-- Test 1: Health Check -->
+        <div class="test-section">
+            <h2>Health Check & Stellar Status</h2>
+            <p>Check if the server is running and Stellar service is initialized.</p>
+            <button onclick="testHealth()">Run Health Check</button>
+            <div id="healthResult"></div>
+        </div>
+
+        <!-- Test 2: Submit Game Session -->
+        <div class="test-section">
+            <h2>Submit Game Session</h2>
+            <p>Test <span class="code">callGameRewardsRecord()</span> function by submitting a game score.</p>
+            <div style="margin: 15px 0;">
+                <label>Score: <input type="number" id="gameScore" value="850" min="0" max="10000" style="padding: 8px; border-radius: 5px; border: 1px solid #ddd; width: 100px;"></label>
+            </div>
+            <button onclick="testGameSubmit()">Submit Game Score</button>
+            <div id="gameResult"></div>
+        </div>
+
+        <!-- Test 3: Get Player Stats -->
+        <div class="test-section">
+            <h2>Get Player Stats</h2>
+            <p>Test <span class="code">getEcoTokenBalance()</span> function by fetching player data.</p>
+            <div style="margin: 15px 0;">
+                <label>Wallet: <input type="text" id="playerWallet" value="guest_test" style="padding: 8px; border-radius: 5px; border: 1px solid #ddd; width: 300px;"></label>
+            </div>
+            <button onclick="testPlayerStats()">Get Player Stats</button>
+            <div id="playerResult"></div>
+        </div>
+
+        <!-- Test 4: Mint Tree NFT -->
+        <div class="test-section">
+            <h2>Mint Tree NFT</h2>
+            <p>Test <span class="code">callTreeNFTMint()</span> function by minting a tree certificate.</p>
+            <button onclick="testTreeMint()">Mint Tree NFT</button>
+            <div id="treeResult"></div>
+        </div>
+
+        <!-- Test 5: All Endpoints -->
+        <div class="test-section">
+            <h2>Run All Tests</h2>
+            <p>Execute all Stellar integration tests at once.</p>
+            <button onclick="runAllTests()" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%);">🚀 Run All Tests</button>
+            <div id="allTestsResult"></div>
+        </div>
+
+        <!-- Integration Overview -->
+        <div class="test-section">
+            <h2>Stellar Integration Overview</h2>
+            <p>Functions integrated into the API:</p>
+            <ul class="endpoint-list">
+                <li><strong>initializeStellar()</strong> - Server startup initialization</li>
+                <li><strong>callGameRewardsRecord()</strong> - POST /api/game/submit</li>
+                <li><strong>getEcoTokenBalance()</strong> - GET /api/player/:wallet</li>
+                <li><strong>callTreeNFTMint()</strong> - POST /api/tree/mint</li>
+                <li><strong>getPlayerTreeNFTs()</strong> - GET /api/player/:wallet/nfts</li>
+                <li><strong>generateExplorerLink()</strong> - All transaction responses</li>
+                <li><strong>isValidAddress()</strong> - Address validation</li>
+                <li><strong>getConfig()</strong> - Configuration info</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = 'http://localhost:4000';
+
+        // Check server status on load
+        window.addEventListener('load', () => {
+            testHealth();
+        });
+
+        async function testHealth() {
+            const resultDiv = document.getElementById('healthResult');
+            const statusDiv = document.getElementById('serverStatus');
+            const stellarDiv = document.getElementById('stellarStatus');
+            
+            resultDiv.innerHTML = '<div class="loading"></div> Testing...';
+            
+            try {
+                const response = await fetch(`${API_BASE}/health`);
+                const data = await response.json();
+                
+                // Update server status
+                statusDiv.innerHTML = `
+                    <span class="status-indicator status-online"></span>
+                    <span>Server Online</span>
+                `;
+                
+                // Update Stellar status
+                const mockMode = data.stellar.mockMode;
+                stellarDiv.innerHTML = `
+                    <strong>Stellar Status:</strong> 
+                    ${mockMode ? '🔧 Mock Mode (Development)' : '⛓️ Blockchain Connected'} | 
+                    Network: ${data.stellar.network}
+                `;
+                
+                resultDiv.innerHTML = `
+                    <div class="result-box">
+                        <div class="success">✓ Server is running!</div>
+                        <pre>${JSON.stringify(data, null, 2)}</pre>
+                    </div>
+                `;
+            } catch (error) {
+                statusDiv.innerHTML = `
+                    <span class="status-indicator status-offline"></span>
+                    <span>Server Offline</span>
+                `;
+                resultDiv.innerHTML = `
+                    <div class="result-box">
+                        <div class="error">✗ Error: ${error.message}</div>
+                        <p style="margin-top: 10px;">Make sure the server is running:</p>
+                        <pre>cd /workspaces/EcoStellar/backend
+npm start</pre>
+                    </div>
+                `;
+            }
+        }
+
+        async function testGameSubmit() {
+            const resultDiv = document.getElementById('gameResult');
+            const score = document.getElementById('gameScore').value;
+            
+            resultDiv.innerHTML = '<div class="loading"></div> Submitting game...';
+            
+            try {
+                const response = await fetch(`${API_BASE}/api/game/submit`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        score: parseInt(score),
+                        game_type: 'carbon_dash'
+                    })
+                });
+                
+                const data = await response.json();
+                
+                const tokensEarned = data.tokens_earned || 0;
+                const txHash = data.blockchain?.txHash || 'N/A';
+                const explorerLink = data.blockchain?.explorerLink || '';
+                
+                resultDiv.innerHTML = `
+                    <div class="result-box">
+                        <div class="success">✓ Game session recorded!</div>
+                        <div style="margin-top: 10px;">
+                            <div class="info">Tokens Earned: ${tokensEarned} ECO</div>
+                            ${txHash !== 'N/A' ? `<div class="info">Transaction: ${txHash}</div>` : ''}
+                            ${explorerLink ? `<div class="info"><a href="${explorerLink}" target="_blank">View on Explorer →</a></div>` : ''}
+                        </div>
+                        <pre style="margin-top: 10px;">${JSON.stringify(data, null, 2)}</pre>
+                    </div>
+                `;
+            } catch (error) {
+                resultDiv.innerHTML = `
+                    <div class="result-box">
+                        <div class="error">✗ Error: ${error.message}</div>
+                    </div>
+                `;
+            }
+        }
+
+        async function testPlayerStats() {
+            const resultDiv = document.getElementById('playerResult');
+            const wallet = document.getElementById('playerWallet').value;
+            
+            resultDiv.innerHTML = '<div class="loading"></div> Fetching player stats...';
+            
+            try {
+                const response = await fetch(`${API_BASE}/api/player/${wallet}`);
+                const data = await response.json();
+                
+                if (data.success) {
+                    const player = data.player;
+                    resultDiv.innerHTML = `
+                        <div class="result-box">
+                            <div class="success">✓ Player stats retrieved!</div>
+                            <div class="grid" style="margin-top: 15px;">
+                                <div style="background: #e0e7ff; padding: 15px; border-radius: 8px;">
+                                    <strong style="color: #667eea;">ECO Balance</strong>
+                                    <div style="font-size: 1.5rem; margin-top: 5px;">${player.eco_tokens_balance || 0}</div>
+                                </div>
+                                <div style="background: #d1fae5; padding: 15px; border-radius: 8px;">
+                                    <strong style="color: #10b981;">Trees Planted</strong>
+                                    <div style="font-size: 1.5rem; margin-top: 5px;">${player.trees_planted || 0}</div>
+                                </div>
+                                <div style="background: #fef3c7; padding: 15px; border-radius: 8px;">
+                                    <strong style="color: #f59e0b;">Level</strong>
+                                    <div style="font-size: 1.5rem; margin-top: 5px;">${player.level || 1}</div>
+                                </div>
+                            </div>
+                            <pre style="margin-top: 15px;">${JSON.stringify(data, null, 2)}</pre>
+                        </div>
+                    `;
+                } else {
+                    resultDiv.innerHTML = `
+                        <div class="result-box">
+                            <div class="error">✗ Player not found</div>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `
+                    <div class="result-box">
+                        <div class="error">✗ Error: ${error.message}</div>
+                    </div>
+                `;
+            }
+        }
+
+        async function testTreeMint() {
+            const resultDiv = document.getElementById('treeResult');
+            
+            resultDiv.innerHTML = '<div class="loading"></div> Minting tree NFT...';
+            
+            try {
+                const response = await fetch(`${API_BASE}/api/tree/mint`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        wallet_address: 'guest_test',
+                        species: 'Oak Tree',
+                        location: 'Central Park, New York',
+                        latitude: 40774000,
+                        longitude: -73968000,
+                        carbon_offset: 750,
+                        partner_org: 'EcoStellar Test'
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    resultDiv.innerHTML = `
+                        <div class="result-box">
+                            <div class="success">✓ Tree NFT minted successfully!</div>
+                            <div style="margin-top: 10px;">
+                                <div class="info">NFT Token ID: ${data.token_id}</div>
+                                ${data.explorer_link ? `<div class="info"><a href="${data.explorer_link}" target="_blank">View on Explorer →</a></div>` : ''}
+                            </div>
+                            <pre style="margin-top: 10px;">${JSON.stringify(data, null, 2)}</pre>
+                        </div>
+                    `;
+                } else {
+                    resultDiv.innerHTML = `
+                        <div class="result-box">
+                            <div class="error">✗ ${data.error || 'Failed to mint NFT'}</div>
+                            <pre style="margin-top: 10px;">${JSON.stringify(data, null, 2)}</pre>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `
+                    <div class="result-box">
+                        <div class="error">✗ Error: ${error.message}</div>
+                    </div>
+                `;
+            }
+        }
+
+        async function runAllTests() {
+            const resultDiv = document.getElementById('allTestsResult');
+            resultDiv.innerHTML = '<div class="loading"></div> Running all tests...';
+            
+            await testHealth();
+            await new Promise(r => setTimeout(r, 500));
+            await testGameSubmit();
+            await new Promise(r => setTimeout(r, 500));
+            await testPlayerStats();
+            await new Promise(r => setTimeout(r, 500));
+            await testTreeMint();
+            
+            resultDiv.innerHTML = `
+                <div class="result-box">
+                    <div class="success">✓ All tests completed!</div>
+                    <p style="margin-top: 10px;">Check the results in each section above.</p>
+                </div>
+            `;
+        }
+    </script>
+</body>
+</html>

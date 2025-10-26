@@ -17,6 +17,13 @@ const Gallery = () => {
   // Player stats (mock - replace with API)
   const [playerTokens, setPlayerTokens] = useState(1250)
   
+  // Verification state
+  const [verificationsRemaining, setVerificationsRemaining] = useState(15)
+  const [totalEarnings, setTotalEarnings] = useState(0)
+  const [isVerifying, setIsVerifying] = useState(false)
+  const [showEarningMessage, setShowEarningMessage] = useState(false)
+  const [lastEarning, setLastEarning] = useState(0)
+  
   // Filter and sort state
   const [filters, setFilters] = useState({
     species: '',
@@ -53,10 +60,87 @@ const Gallery = () => {
     setPlayerTokens(prev => prev - cost)
   }
 
+  // Handle verification
+  const handleVerify = () => {
+    if (verificationsRemaining <= 0) return
+    
+    setIsVerifying(true)
+    
+    // Simulate verification process
+    setTimeout(() => {
+      const earning = 0.75
+      setVerificationsRemaining(prev => prev - 1)
+      setTotalEarnings(prev => prev + earning)
+      setLastEarning(earning)
+      setIsVerifying(false)
+      setShowEarningMessage(true)
+      
+      // Hide message after 3 seconds
+      setTimeout(() => setShowEarningMessage(false), 3000)
+    }, 1000)
+  }
+
   const continents = getContinents(nfts)
 
   return (
     <div className={styles.galleryPage}>
+      {/* Verification Queue Section */}
+      <div className={styles.verificationSection}>
+        <div className="container">
+          <motion.div
+            className={styles.verificationCard}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            <div className={styles.verificationHeader}>
+              <h2 className={styles.verificationTitle}>🎯 VERIFICATION QUEUE</h2>
+            </div>
+            <div className={styles.verificationContent}>
+              <div className={styles.verificationStats}>
+                <div className={styles.statBox}>
+                  <span className={styles.statLabel}>NGO Records to Verify</span>
+                  <span className={styles.statValue}>{verificationsRemaining}</span>
+                </div>
+                <div className={styles.statBox}>
+                  <span className={styles.statLabel}>Earn Per Verification</span>
+                  <span className={styles.statValue}>$0.75</span>
+                </div>
+                <div className={styles.statBox}>
+                  <span className={styles.statLabel}>Potential Earnings</span>
+                  <span className={styles.statValue}>${(verificationsRemaining * 0.75).toFixed(2)}</span>
+                </div>
+              </div>
+              
+              <button
+                className={`btn btn-primary btn-lg ${styles.verifyButton}`}
+                onClick={handleVerify}
+                disabled={verificationsRemaining <= 0 || isVerifying}
+              >
+                {isVerifying ? '⏳ Verifying...' : verificationsRemaining > 0 ? '✓ VERIFY NEXT RECORD' : '✓ All Done!'}
+              </button>
+              
+              {showEarningMessage && (
+                <motion.div
+                  className={styles.earningMessage}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0 }}
+                >
+                  💰 ${lastEarning.toFixed(2)} deposited to your account!
+                </motion.div>
+              )}
+              
+              {totalEarnings > 0 && (
+                <div className={styles.totalEarnings}>
+                  <strong>Total Earned:</strong> ${totalEarnings.toFixed(2)}
+                </div>
+              )}
+            </div>
+          </motion.div>
+        </div>
+      </div>
+
       {/* Header */}
       <div className={styles.header}>
         <div className="container">

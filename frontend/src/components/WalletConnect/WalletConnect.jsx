@@ -19,8 +19,8 @@ const WalletConnect = () => {
 
   const handleConnect = async () => {
     if (!isFreighterInstalled()) {
-      error('Please install Freighter wallet extension')
-      window.open('https://www.freighter.app/', '_blank')
+      error('Please install Freighter wallet extension from freighter.app')
+      // Don't auto-open the page, just show the error
       return
     }
 
