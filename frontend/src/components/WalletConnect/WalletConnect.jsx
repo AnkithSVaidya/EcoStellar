@@ -16,50 +16,76 @@ const WalletConnect = () => {
     connectManualAddress,
     disconnectWallet,
     refreshBalance,
-    isFreighterInstalled 
+    isFreighterInstalled,
+    createTestnetAccount,
+    deleteTestnetAccount,
   } = useWallet()
   
   const { success, error } = useToast()
   const [showDropdown, setShowDropdown] = useState(false)
   const [showManualInput, setShowManualInput] = useState(false)
   const [manualAddress, setManualAddress] = useState('')
-  const [verifying, setVerifying] = useState(false)
+  const [verifying, setVerifying] = useState(false);
+  const [creatingAccount, setCreatingAccount] = useState(false);
+  const [newAccountInfo, setNewAccountInfo] = useState(null);
 
   const handleConnect = async () => {
     // Show manual input instead of trying Freighter
     setShowManualInput(true)
   }
 
-  const handleManualConnect = async () => {
+    const handleManualConnect = async () => {
     if (!manualAddress.trim()) {
-      error('Please enter a wallet address')
-      return
+      showToast('Please enter a Stellar address', 'error');
+      return;
     }
-    
-    setVerifying(true)
-    
+
+    setVerifying(true);
     try {
-      // Verify address on Stellar network
-      const result = await connectManualAddress(manualAddress)
+      const result = await connectManualAddress(manualAddress.trim());
       
       if (result.success) {
-        setShowManualInput(false)
-        setManualAddress('')
-        
         if (result.exists) {
-          success(`✅ Wallet verified on Stellar! Balance: ${balance} XLM`)
+          showToast(`Connected successfully! Balance: ${result.balance} XLM`, 'success');
         } else {
-          success('⚠️ Wallet verified but unfunded. Fund it to use features.')
+          showToast('Address is valid but unfunded. Fund it to use full features.', 'warning');
         }
+        setShowManualInput(false);
+        setManualAddress('');
       } else {
-        error(`❌ Verification failed: ${result.error}`)
+        showToast(result.error || 'Failed to connect', 'error');
       }
-    } catch (err) {
-      error(`❌ ${err.message}`)
+    } catch (error) {
+      showToast(error.message || 'Failed to verify address', 'error');
     } finally {
-      setVerifying(false)
+      setVerifying(false);
     }
-  }
+  };
+
+  const handleCreateTestnetAccount = async () => {
+    setCreatingAccount(true);
+    setNewAccountInfo(null);
+    
+    try {
+      showToast('Creating new testnet account...', 'info');
+      const result = await createTestnetAccount();
+      
+      if (result.success) {
+        setNewAccountInfo({
+          publicKey: result.publicKey,
+          secretKey: result.secretKey,
+          balance: result.balance
+        });
+        showToast(`Account created with ${result.balance} XLM!`, 'success');
+      } else {
+        showToast(result.error || 'Failed to create account', 'error');
+      }
+    } catch (error) {
+      showToast(error.message || 'Failed to create testnet account', 'error');
+    } finally {
+      setCreatingAccount(false);
+    }
+  };
 
   const handleDisconnect = () => {
     disconnectWallet()
@@ -92,6 +118,16 @@ const WalletConnect = () => {
         <button className={styles.btn} onClick={handleConnect}>
           <span className={styles.icon}>🔗</span>
           Connect Wallet
+        </button>
+        
+        <button 
+          className={styles.createBtn} 
+          onClick={handleCreateTestnetAccount}
+          disabled={creatingAccount}
+          style={{marginLeft: '10px'}}
+        >
+          <span className={styles.icon}>{creatingAccount ? '⏳' : '🆕'}</span>
+          {creatingAccount ? 'Creating...' : 'Create Testnet Account'}
         </button>
         
         {showManualInput && (
@@ -130,6 +166,80 @@ const WalletConnect = () => {
                   Create one here
                 </a>
               </p>
+            </div>
+          </div>
+        )}
+        
+        {newAccountInfo && (
+          <div className={styles.manualInputOverlay} onClick={() => setNewAccountInfo(null)}>
+            <div className={styles.manualInputBox} onClick={(e) => e.stopPropagation()}>
+              <h3>✅ Testnet Account Created!</h3>
+              <p style={{color: '#00C853', marginBottom: '20px'}}>
+                Your account has been funded with {newAccountInfo.balance} XLM on Stellar testnet
+              </p>
+              
+              <div style={{marginBottom: '15px', textAlign: 'left'}}>
+                <strong>Public Key (Share this):</strong>
+                <div style={{
+                  background: '#1a1a1a',
+                  padding: '10px',
+                  borderRadius: '8px',
+                  wordBreak: 'break-all',
+                  marginTop: '5px',
+                  fontSize: '0.85rem',
+                  fontFamily: 'monospace'
+                }}>
+                  {newAccountInfo.publicKey}
+                </div>
+                <button 
+                  onClick={() => {
+                    navigator.clipboard.writeText(newAccountInfo.publicKey);
+                    success('Public key copied!');
+                  }}
+                  style={{marginTop: '5px', padding: '5px 10px', fontSize: '0.85rem'}}
+                  className="btn btn-outline"
+                >
+                  📋 Copy Public Key
+                </button>
+              </div>
+              
+              <div style={{marginBottom: '20px', textAlign: 'left'}}>
+                <strong style={{color: '#ff4444'}}>Secret Key (Keep this PRIVATE!):</strong>
+                <div style={{
+                  background: '#2a1a1a',
+                  border: '2px solid #ff4444',
+                  padding: '10px',
+                  borderRadius: '8px',
+                  wordBreak: 'break-all',
+                  marginTop: '5px',
+                  fontSize: '0.85rem',
+                  fontFamily: 'monospace'
+                }}>
+                  {newAccountInfo.secretKey}
+                </div>
+                <button 
+                  onClick={() => {
+                    navigator.clipboard.writeText(newAccountInfo.secretKey);
+                    success('Secret key copied! Keep it safe!');
+                  }}
+                  style={{marginTop: '5px', padding: '5px 10px', fontSize: '0.85rem'}}
+                  className="btn btn-outline"
+                >
+                  🔐 Copy Secret Key
+                </button>
+              </div>
+              
+              <p style={{color: '#ff9800', fontSize: '0.85rem', marginBottom: '15px'}}>
+                ⚠️ Save these keys now! The secret key is stored in your browser, but you should save it securely.
+              </p>
+              
+              <button 
+                className="btn btn-primary" 
+                onClick={() => setNewAccountInfo(null)}
+                style={{width: '100%'}}
+              >
+                Got it!
+              </button>
             </div>
           </div>
         )}

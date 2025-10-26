@@ -215,21 +215,23 @@ export const WalletProvider = ({ children }) => {
 
   const value = {
     address,
+    walletAddress: address,
     isConnected,
     isConnecting,
     balance,
     usdcBalance,
-    network,
     accountExists,
     error,
-    isFreighterInstalled,
+    network,
     connectWallet,
     connectManualAddress,
     disconnectWallet,
-    signTransaction,
-    refreshBalance: () => address && fetchBalance(address),
-    setNetwork,
-  }
+    fetchBalance,
+    refreshBalance: () => fetchBalance(address),
+    createTestnetAccount,
+    deleteTestnetAccount,
+    isFreighterInstalled: typeof window !== 'undefined' && window.freighter !== undefined,
+  };
 
   return (
     <WalletContext.Provider value={value}>
