@@ -21,22 +21,51 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: 'npm'
-          cache-dependency-path: frontend/package-lock.json
-          
-      - name: Install dependencies
+      - name: Create static site
         run: |
-          cd frontend
-          npm ci
-          
-      - name: Build
-        run: |
-          cd frontend
-          npm run build
+          mkdir -p dist
+          cp -r game dist/
+          cat > dist/index.html << 'EOF'
+          <!DOCTYPE html>
+          <html lang="en">
+          <head>
+              <meta charset="UTF-8">
+              <meta name="viewport" content="width=device-width, initial-scale=1.0">
+              <title>EcoStellar - Blockchain Gaming</title>
+              <style>
+                  * { margin: 0; padding: 0; box-sizing: border-box; }
+                  body { font-family: system-ui, sans-serif; background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%); color: #fff; }
+                  .hero { text-align: center; padding: 80px 20px; background: linear-gradient(135deg, rgba(0,200,83,0.1) 0%, rgba(0,150,63,0.1) 100%); }
+                  h1 { font-size: 3.5rem; background: linear-gradient(135deg, #00C853 0%, #00E676 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 20px; }
+                  .subtitle { font-size: 1.5rem; color: #aaa; margin-bottom: 40px; }
+                  .btn { display: inline-block; background: linear-gradient(135deg, #00C853 0%, #00E676 100%); color: #000; padding: 15px 40px; font-size: 1.2rem; font-weight: bold; border-radius: 50px; text-decoration: none; margin: 10px; }
+                  .contract { background: rgba(0,0,0,0.3); padding: 20px; margin: 20px auto; max-width: 900px; border-radius: 12px; border-left: 4px solid #00C853; }
+                  .contract code { background: rgba(0,0,0,0.5); padding: 10px; display: block; border-radius: 8px; color: #FFD700; word-break: break-all; margin-top: 10px; }
+                  iframe { width: 100%; max-width: 1200px; height: 600px; border: 2px solid #00C853; border-radius: 16px; display: block; margin: 40px auto; }
+              </style>
+          </head>
+          <body>
+              <div class="hero">
+                  <h1>🌟 EcoStellar</h1>
+                  <p class="subtitle">Play Games. Plant Trees. Earn Crypto on Stellar.</p>
+                  <a href="/EcoStellar/game/" class="btn">🎮 Play Carbon Dash</a>
+              </div>
+              <iframe src="/EcoStellar/game/index.html"></iframe>
+              <div class="contract">
+                  <h3 style="color: #00E676;">💎 EcoToken Contract</h3>
+                  <code>CCV5YHHNQ6AM77Z4GRBRGKDDCFVMOT3K4XKFMJ53E6ERRDFKIV5FLIQF</code>
+              </div>
+              <div class="contract">
+                  <h3 style="color: #00E676;">🎯 GameRewards Contract</h3>
+                  <code>CBYRJUBZVX7ND2MV7QJA6D6BXHQO6BNXFOVXTXZMCLDINMPHF2TNHRZB</code>
+              </div>
+              <div class="contract">
+                  <h3 style="color: #00E676;">🌳 TreeNFT Contract</h3>
+                  <code>CB5IMOHL25QQWVJA3WHUQVUD7KUD7XLTQK3CQOZLXN7QKHANB3KPLAZL</code>
+              </div>
+          </body>
+          </html>
+          EOF
           
       - name: Setup Pages
         uses: actions/configure-pages@v4
@@ -44,7 +73,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: './frontend/dist'
+          path: './dist'
           
       - name: Deploy to GitHub Pages
         id: deployment
