@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoStellar - Blockchain Gaming Platform</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+            color: #ffffff;
+            min-height: 100vh;
+        }
+        .hero {
+            text-align: center;
+            padding: 80px 20px;
+            background: linear-gradient(135deg, rgba(0, 200, 83, 0.1) 0%, rgba(0, 150, 63, 0.1) 100%);
+        }
+        h1 {
+            font-size: 3.5rem;
+            background: linear-gradient(135deg, #00C853 0%, #00E676 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
+        }
+        .subtitle {
+            font-size: 1.5rem;
+            color: #aaa;
+            margin-bottom: 40px;
+        }
+        .contracts {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .contracts h2 {
+            color: #00C853;
+            margin-bottom: 30px;
+            font-size: 2rem;
+        }
+        .contract {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 12px;
+            border-left: 4px solid #00C853;
+        }
+        .contract h3 {
+            color: #00E676;
+            margin-bottom: 10px;
+        }
+        .contract code {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 10px 15px;
+            display: block;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            color: #FFD700;
+            word-break: break-all;
+            margin-top: 10px;
+        }
+        .game-section {
+            max-width: 1200px;
+            margin: 60px auto;
+            padding: 0 20px;
+        }
+        .game-frame {
+            width: 100%;
+            height: 600px;
+            border: 2px solid #00C853;
+            border-radius: 16px;
+            background: #000;
+        }
+        .btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #00C853 0%, #00E676 100%);
+            color: #000;
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-radius: 50px;
+            text-decoration: none;
+            margin: 10px;
+            transition: transform 0.2s;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 60px auto;
+            padding: 0 20px;
+        }
+        .feature {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 30px;
+            border-radius: 16px;
+            border: 1px solid rgba(0, 200, 83, 0.3);
+            text-align: center;
+        }
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+        .feature h3 {
+            color: #00E676;
+            margin-bottom: 10px;
+        }
+        .stellar-badge {
+            background: rgba(255, 215, 0, 0.1);
+            border: 2px solid #FFD700;
+            padding: 15px 30px;
+            border-radius: 50px;
+            display: inline-block;
+            margin: 20px 0;
+            font-weight: bold;
+            color: #FFD700;
+        }
+    </style>
+</head>
+<body>
+    <div class="hero">
+        <h1>🌟 EcoStellar</h1>
+        <p class="subtitle">Play Games. Plant Trees. Earn Crypto.</p>
+        <div class="stellar-badge">⭐ Built on Stellar Blockchain</div>
+        <div>
+            <a href="/game/" class="btn">🎮 Play Carbon Dash</a>
+            <a href="#contracts" class="btn">📜 View Contracts</a>
+        </div>
+    </div>
+
+    <div class="features">
+        <div class="feature">
+            <div class="feature-icon">⚡</div>
+            <h3>Fast Finality</h3>
+            <p>Transactions confirm in 3-5 seconds on Stellar</p>
+        </div>
+        <div class="feature">
+            <div class="feature-icon">💰</div>
+            <h3>Low Fees</h3>
+            <p>~$0.01 per transaction - play without worry</p>
+        </div>
+        <div class="feature">
+            <div class="feature-icon">💵</div>
+            <h3>USDC Rewards</h3>
+            <p>Earn real stablecoin rewards while gaming</p>
+        </div>
+        <div class="feature">
+            <div class="feature-icon">🌳</div>
+            <h3>Tree NFTs</h3>
+            <p>Mint certificates for real trees planted</p>
+        </div>
+    </div>
+
+    <div class="game-section">
+        <h2 style="text-align: center; color: #00C853; margin-bottom: 30px;">🎮 Carbon Dash Game</h2>
+        <iframe src="/game/index.html" class="game-frame" frameborder="0"></iframe>
+    </div>
+
+    <div class="contracts" id="contracts">
+        <h2>📜 Deployed Smart Contracts</h2>
+        <p style="color: #aaa; margin-bottom: 30px;">All contracts deployed on Stellar Testnet</p>
+        
+        <div class="contract">
+            <h3>💎 EcoToken Contract</h3>
+            <p>In-game currency and rewards token</p>
+            <code>CCV5YHHNQ6AM77Z4GRBRGKDDCFVMOT3K4XKFMJ53E6ERRDFKIV5FLIQF</code>
+            <a href="https://stellar.expert/explorer/testnet/contract/CCV5YHHNQ6AM77Z4GRBRGKDDCFVMOT3K4XKFMJ53E6ERRDFKIV5FLIQF" target="_blank" style="color: #00E676; margin-top: 10px; display: inline-block;">View on Stellar Explorer →</a>
+        </div>
+
+        <div class="contract">
+            <h3>🎯 GameRewards Contract</h3>
+            <p>Automated reward distribution system</p>
+            <code>CBYRJUBZVX7ND2MV7QJA6D6BXHQO6BNXFOVXTXZMCLDINMPHF2TNHRZB</code>
+            <a href="https://stellar.expert/explorer/testnet/contract/CBYRJUBZVX7ND2MV7QJA6D6BXHQO6BNXFOVXTXZMCLDINMPHF2TNHRZB" target="_blank" style="color: #00E676; margin-top: 10px; display: inline-block;">View on Stellar Explorer →</a>
+        </div>
+
+        <div class="contract">
+            <h3>🌳 TreeNFT Contract</h3>
+            <p>Environmental impact NFT certificates</p>
+            <code>CB5IMOHL25QQWVJA3WHUQVUD7KUD7XLTQK3CQOZLXN7QKHANB3KPLAZL</code>
+            <a href="https://stellar.expert/explorer/testnet/contract/CB5IMOHL25QQWVJA3WHUQVUD7KUD7XLTQK3CQOZLXN7QKHANB3KPLAZL" target="_blank" style="color: #00E676; margin-top: 10px; display: inline-block;">View on Stellar Explorer →</a>
+        </div>
+    </div>
+
+    <div style="text-align: center; padding: 60px 20px; background: rgba(0, 200, 83, 0.05);">
+        <h2 style="color: #00C853; margin-bottom: 20px;">🚀 Stellar Hackathon Features</h2>
+        <div style="max-width: 800px; margin: 0 auto; text-align: left; color: #ccc;">
+            <p style="margin: 10px 0;">✅ Fast finality (3-5 second transactions)</p>
+            <p style="margin: 10px 0;">✅ Low fees (~$0.01 per transaction)</p>
+            <p style="margin: 10px 0;">✅ MoneyGram integration (cash-to-crypto on-ramp)</p>
+            <p style="margin: 10px 0;">✅ USDC stablecoin payments</p>
+            <p style="margin: 10px 0;">✅ 3 deployed Soroban smart contracts</p>
+            <p style="margin: 10px 0;">✅ Real-world environmental impact</p>
+        </div>
+        <div style="margin-top: 40px;">
+            <a href="https://github.com/AnkithSVaidya/EcoStellar" class="btn" target="_blank">View on GitHub</a>
+        </div>
+    </div>
+
+    <footer style="text-align: center; padding: 40px; color: #666;">
+        <p>Built with 💚 on Stellar Blockchain</p>
+        <p style="margin-top: 10px;">EcoStellar © 2025</p>
+    </footer>
+</body>
+</html>
