@@ -1,5 +1,7 @@
 # EcoStellar 🌟
 
+Video link for the project - https://drive.google.com/file/d/1ISBvItoVuZLG5r6WCvwnYYQQUi8c_Q6C/view?usp=sharing 
+
 A Stellar/Soroban smart contract platform for the EcoQuest gaming ecosystem.
 
 ## 🎮 About
