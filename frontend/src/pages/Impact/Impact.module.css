@@ -1,148 +1,267 @@
+/* Main Layout */
 .impactPage {
-  padding: var(--spacing-2xl) 0;
-  min-height: calc(100vh - 80px);
+  display: flex;
+  height: calc(100vh - 80px);
+  background: #0a0a0a;
+  position: relative;
+  overflow: hidden;
 }
 
-.impactPage h1 {
+/* Globe Section */
+.globeSection {
+  flex: 1;
+  position: relative;
+  background: #000;
+}
+
+.globeOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.globeTitle {
   text-align: center;
-  margin-bottom: var(--spacing-md);
+  padding: var(--spacing-xl);
+  font-size: 2rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--color-primary) 0%, #00C853 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: 0 0 20px rgba(0, 200, 83, 0.3);
 }
 
-.subtitle {
-  text-align: center;
-  color: var(--color-text-secondary);
-  margin-bottom: var(--spacing-2xl);
+/* Sidebar */
+.sidebar {
+  width: 400px;
+  background: rgba(10, 10, 10, 0.95);
+  backdrop-filter: blur(20px);
+  border-left: 1px solid rgba(255, 255, 255, 0.1);
+  overflow-y: auto;
+  z-index: 5;
 }
 
-/* Stats Grid */
+.sidebarContent {
+  padding: var(--spacing-xl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+/* Stats Cards */
+.statsCard {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-xl);
+}
+
+.statsCard .card-title {
+  margin-bottom: var(--spacing-lg);
+  font-size: 1.25rem;
+  color: var(--color-primary);
+}
+
 .statsGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: 1fr 1fr;
   gap: var(--spacing-lg);
-  margin-bottom: var(--spacing-2xl);
 }
 
-.statsGrid .card {
+.statItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   text-align: center;
+  gap: var(--spacing-xs);
+}
+
+.statIcon {
+  font-size: 2.5rem;
+  margin-bottom: var(--spacing-xs);
 }
 
 .statValue {
-  font-size: 3rem;
-  font-weight: 700;
+  font-size: 1.75rem;
+  font-weight: 800;
   color: var(--color-primary);
-  display: block;
-  margin: var(--spacing-lg) 0;
+  line-height: 1;
 }
 
-.statChange {
-  color: var(--color-success);
+.statLabel {
+  font-size: 0.75rem;
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Progress Section */
+.progressSection {
+  margin-top: var(--spacing-lg);
+  padding-top: var(--spacing-lg);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.progressLabel {
   font-size: 0.875rem;
-  margin: 0;
+  color: var(--color-text-secondary);
+  margin-bottom: var(--spacing-sm);
 }
 
-/* Carbon Card */
-.carbonCard {
-  margin-bottom: var(--spacing-2xl);
-  background: linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary) 100%);
-  border: none;
+.progressBar {
+  height: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 999px;
+  overflow: hidden;
 }
 
-.carbonCard h2 {
-  text-align: center;
-  margin-bottom: var(--spacing-xl);
+.progressFill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--color-primary) 0%, #00C853 100%);
+  border-radius: 999px;
+  transition: width 1s ease-out;
 }
 
-.carbonStats {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: var(--spacing-xl);
-  text-align: center;
+/* Timeline Card */
+.timelineCard {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-xl);
 }
 
-.carbonStat {
+.timelineCard .card-title {
+  margin-bottom: var(--spacing-lg);
+  font-size: 1.25rem;
+  color: var(--color-primary);
+}
+
+.timeline {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-sm);
+  gap: var(--spacing-md);
+  max-height: 400px;
+  overflow-y: auto;
+  padding-right: var(--spacing-sm);
 }
 
-.carbonValue {
-  font-size: 2.5rem;
-  font-weight: 700;
-  color: white;
+/* Custom scrollbar for timeline */
+.timeline::-webkit-scrollbar {
+  width: 6px;
 }
 
-.carbonLabel {
-  font-size: 0.875rem;
-  color: rgba(255, 255, 255, 0.8);
+.timeline::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 999px;
 }
 
-/* Map Placeholder */
-.mapPlaceholder {
-  text-align: center;
-  padding: var(--spacing-2xl);
-  background: var(--color-bg-tertiary);
-  border-radius: var(--radius-md);
-  margin-top: var(--spacing-lg);
+.timeline::-webkit-scrollbar-thumb {
+  background: var(--color-primary);
+  border-radius: 999px;
 }
 
-.mapPlaceholder p:first-child {
-  font-size: 4rem;
-  margin-bottom: var(--spacing-md);
+.timeline::-webkit-scrollbar-thumb:hover {
+  background: #00C853;
 }
 
-/* Activity List */
-.activityList {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-lg);
-  margin-top: var(--spacing-lg);
-}
-
-.activityItem {
+.timelineItem {
   display: flex;
   gap: var(--spacing-md);
   padding: var(--spacing-md);
-  background: var(--color-bg-tertiary);
+  background: rgba(255, 255, 255, 0.02);
   border-radius: var(--radius-md);
+  border-left: 3px solid var(--color-primary);
   transition: all var(--transition-fast);
 }
 
-.activityItem:hover {
-  background: var(--color-bg-secondary);
+.timelineItem:hover {
+  background: rgba(255, 255, 255, 0.05);
   transform: translateX(4px);
 }
 
 .activityIcon {
-  font-size: 2rem;
+  font-size: 1.5rem;
   flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 200, 83, 0.1);
+  border-radius: 50%;
 }
 
 .activityContent {
   flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
 }
 
 .activityText {
-  margin-bottom: var(--spacing-xs);
+  font-size: 0.875rem;
   color: var(--color-text-primary);
-}
-
-.activityText strong {
-  color: var(--color-primary);
+  margin: 0;
+  line-height: 1.4;
 }
 
 .activityTime {
   font-size: 0.75rem;
   color: var(--color-text-muted);
-  margin: 0;
 }
 
-/* Responsive */
-@media (max-width: 768px) {
-  .carbonStats {
+/* Responsive Design */
+@media (max-width: 968px) {
+  .impactPage {
+    flex-direction: column;
+  }
+
+  .globeSection {
+    height: 50vh;
+  }
+
+  .sidebar {
+    width: 100%;
+    height: 50vh;
+    border-left: none;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .globeTitle {
+    font-size: 1.5rem;
+    padding: var(--spacing-lg);
+  }
+
+  .statsGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .sidebarContent {
+    padding: var(--spacing-lg);
+  }
+}
+
+@media (max-width: 480px) {
+  .statsGrid {
     grid-template-columns: 1fr;
   }
 
-  .statValue {
+  .statIcon {
     font-size: 2rem;
+  }
+
+  .statValue {
+    font-size: 1.5rem;
+  }
+
+  .sidebar {
+    height: auto;
+    max-height: 50vh;
   }
 }

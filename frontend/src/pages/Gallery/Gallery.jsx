@@ -1,196 +1,286 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
+import { motion } from 'framer-motion'
 import { useWallet } from '../../contexts/WalletContext'
+import NFTCard from '../../components/NFTCard/NFTCard'
+import MintModal from '../../components/MintModal/MintModal'
+import { mockNFTs, filterNFTs, sortNFTs, getContinents } from '../../data/treeNFTs'
 import styles from './Gallery.module.css'
 
 const Gallery = () => {
-  const { isConnected, address } = useWallet()
-  const [selectedNFT, setSelectedNFT] = useState(null)
+  const { walletAddress, isConnected } = useWallet()
+  const [nfts, setNfts] = useState(mockNFTs)
+  const [displayedNFTs, setDisplayedNFTs] = useState(mockNFTs)
+  const [isMintModalOpen, setIsMintModalOpen] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
+  
+  // Player stats (mock - replace with API)
+  const [playerTokens, setPlayerTokens] = useState(1250)
+  
+  // Filter and sort state
+  const [filters, setFilters] = useState({
+    species: '',
+    continent: '',
+    dateFrom: '',
+    dateTo: '',
+    search: ''
+  })
+  const [sortBy, setSortBy] = useState('newest')
 
-  // Mock NFT data (will be replaced with blockchain data)
-  const mockNFTs = [
-    {
-      id: 1,
-      species: 'Oak',
-      location: 'San Francisco, CA',
-      latitude: 37.7749,
-      longitude: -122.4194,
-      plantDate: '2025-10-20',
-      image: 'https://via.placeholder.com/400x300/2E7D32/FFFFFF?text=Oak+Tree',
-      owner: 'GXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'
-    },
-    {
-      id: 2,
-      species: 'Pine',
-      location: 'New York City, NY',
-      latitude: 40.7128,
-      longitude: -74.0060,
-      plantDate: '2025-10-21',
-      image: 'https://via.placeholder.com/400x300/00C853/FFFFFF?text=Pine+Tree',
-      owner: 'GXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'
-    },
-    {
-      id: 3,
-      species: 'Cherry Blossom',
-      location: 'Tokyo, Japan',
-      latitude: 35.6762,
-      longitude: 139.6503,
-      plantDate: '2025-10-22',
-      image: 'https://via.placeholder.com/400x300/81C784/FFFFFF?text=Cherry+Blossom',
-      owner: 'GXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'
-    },
-  ]
+  // Apply filters and sorting
+  useEffect(() => {
+    let filtered = filterNFTs(nfts, filters)
+    filtered = sortNFTs(filtered, sortBy)
+    setDisplayedNFTs(filtered)
+  }, [nfts, filters, sortBy])
+
+  const handleFilterChange = (key, value) => {
+    setFilters(prev => ({ ...prev, [key]: value }))
+  }
+
+  const clearFilters = () => {
+    setFilters({
+      species: '',
+      continent: '',
+      dateFrom: '',
+      dateTo: '',
+      search: ''
+    })
+  }
+
+  const handleMintSuccess = (newNFT, cost) => {
+    setNfts(prev => [newNFT, ...prev])
+    setPlayerTokens(prev => prev - cost)
+  }
+
+  const continents = getContinents(nfts)
 
   return (
     <div className={styles.galleryPage}>
-      <div className="container">
-        <h1>🌳 Tree NFT Gallery</h1>
-        <p className={styles.subtitle}>
-          Explore soulbound NFT certificates representing real trees planted around the world
-        </p>
-
-        {!isConnected && (
-          <div className={styles.connectPrompt}>
-            <p>🔗 Connect your wallet to view your personal tree collection</p>
-          </div>
-        )}
-
-        {/* Stats */}
-        <div className={styles.stats}>
-          <div className={styles.statBox}>
-            <span className={styles.statValue}>{mockNFTs.length}</span>
-            <span className={styles.statLabel}>Total Trees Minted</span>
-          </div>
-          <div className={styles.statBox}>
-            <span className={styles.statValue}>15</span>
-            <span className={styles.statLabel}>Countries</span>
-          </div>
-          <div className={styles.statBox}>
-            <span className={styles.statValue}>42</span>
-            <span className={styles.statLabel}>Species</span>
-          </div>
-        </div>
-
-        {/* NFT Grid */}
-        <div className={styles.nftGrid}>
-          {mockNFTs.map((nft) => (
-            <div 
-              key={nft.id} 
-              className={styles.nftCard}
-              onClick={() => setSelectedNFT(nft)}
+      {/* Header */}
+      <div className={styles.header}>
+        <div className="container">
+          <motion.div
+            className={styles.headerContent}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+          >
+            <div className={styles.titleSection}>
+              <h1 className={styles.pageTitle}>🌳 My Tree NFT Gallery</h1>
+              <p className={styles.subtitle}>
+                Your collection of authenticated tree planting certificates on the Stellar blockchain
+              </p>
+            </div>
+            <button 
+              className={`btn btn-primary btn-lg ${styles.mintButton}`}
+              onClick={() => setIsMintModalOpen(true)}
+              disabled={!isConnected}
             >
-              <div className={styles.nftImage}>
-                <img src={nft.image} alt={`${nft.species} tree`} />
-                <div className={styles.nftId}>#{nft.id}</div>
-              </div>
-              <div className={styles.nftInfo}>
-                <h3>{nft.species}</h3>
-                <p className={styles.nftLocation}>
-                  📍 {nft.location}
-                </p>
-                <p className={styles.nftDate}>
-                  🗓️ Planted: {nft.plantDate}
-                </p>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {/* Empty State */}
-        {mockNFTs.length === 0 && (
-          <div className={styles.emptyState}>
-            <p className={styles.emptyIcon}>🌱</p>
-            <h3>No Tree NFTs Yet</h3>
-            <p>Play Carbon Dash and unlock achievements to mint your first Tree NFT!</p>
-          </div>
-        )}
-
-        {/* Modal */}
-        {selectedNFT && (
-          <div className={styles.modal} onClick={() => setSelectedNFT(null)}>
-            <div className={styles.modalContent} onClick={e => e.stopPropagation()}>
-              <button 
-                className={styles.modalClose}
-                onClick={() => setSelectedNFT(null)}
-              >
-                ✕
-              </button>
-              
-              <div className={styles.modalBody}>
-                <img 
-                  src={selectedNFT.image} 
-                  alt={`${selectedNFT.species} tree`}
-                  className={styles.modalImage}
-                />
-                
-                <div className={styles.modalInfo}>
-                  <h2>🌳 {selectedNFT.species}</h2>
-                  
-                  <div className={styles.modalDetails}>
-                    <div className={styles.modalDetail}>
-                      <span className={styles.modalLabel}>NFT ID:</span>
-                      <span className={styles.modalValue}>#{selectedNFT.id}</span>
-                    </div>
-                    
-                    <div className={styles.modalDetail}>
-                      <span className={styles.modalLabel}>Location:</span>
-                      <span className={styles.modalValue}>{selectedNFT.location}</span>
-                    </div>
-                    
-                    <div className={styles.modalDetail}>
-                      <span className={styles.modalLabel}>Coordinates:</span>
-                      <span className={styles.modalValue}>
-                        {selectedNFT.latitude}°N, {Math.abs(selectedNFT.longitude)}°W
-                      </span>
-                    </div>
-                    
-                    <div className={styles.modalDetail}>
-                      <span className={styles.modalLabel}>Plant Date:</span>
-                      <span className={styles.modalValue}>{selectedNFT.plantDate}</span>
-                    </div>
-                    
-                    <div className={styles.modalDetail}>
-                      <span className={styles.modalLabel}>Owner:</span>
-                      <code className={styles.modalAddress}>
-                        {selectedNFT.owner.slice(0, 8)}...{selectedNFT.owner.slice(-8)}
-                      </code>
-                    </div>
-                  </div>
-                  
-                  <div className={styles.modalActions}>
-                    <a 
-                      href={`https://stellar.expert/explorer/testnet/contract/CB5IMOHL25QQWVJA3WHUQVUD7KUD7XLTQK3CQOZLXN7QKHANB3KPLAZL`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="btn btn-primary"
-                    >
-                      View on Explorer →
-                    </a>
-                  </div>
-                  
-                  <div className={styles.soulboundBadge}>
-                    🔒 Soulbound NFT - Non-Transferable
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* Info Section */}
-        <div className={`card ${styles.infoCard}`}>
-          <h3>About Tree NFTs</h3>
-          <p>
-            Each Tree NFT is a <strong>soulbound certificate</strong> permanently linked to your wallet.
-            These NFTs cannot be transferred or sold - they're a permanent record of your environmental impact!
-          </p>
-          <ul className={styles.features}>
-            <li>🔒 Soulbound (non-transferable)</li>
-            <li>📍 GPS coordinates stored on-chain</li>
-            <li>🌍 Verifiable real-world impact</li>
-            <li>🎮 Unlocked through gameplay achievements</li>
-          </ul>
+              <span className={styles.mintIcon}>🌱</span>
+              Mint New Tree NFT
+            </button>
+          </motion.div>
         </div>
       </div>
+
+      {/* Filters and Controls */}
+      <div className={styles.controlsSection}>
+        <div className="container">
+          <div className={styles.controls}>
+            {/* Search */}
+            <div className={styles.searchBox}>
+              <span className={styles.searchIcon}>🔍</span>
+              <input
+                type="text"
+                placeholder="Search by species, location, or ID..."
+                className={styles.searchInput}
+                value={filters.search}
+                onChange={(e) => handleFilterChange('search', e.target.value)}
+              />
+            </div>
+
+            {/* Filters */}
+            <div className={styles.filters}>
+              <select 
+                className={styles.filterSelect}
+                value={sortBy}
+                onChange={(e) => setSortBy(e.target.value)}
+              >
+                <option value="newest">Newest First</option>
+                <option value="oldest">Oldest First</option>
+                <option value="alphabetical">Alphabetical</option>
+                <option value="carbonOffset">Highest CO₂ Offset</option>
+              </select>
+
+              <select 
+                className={styles.filterSelect}
+                value={filters.continent}
+                onChange={(e) => handleFilterChange('continent', e.target.value)}
+              >
+                <option value="">All Continents</option>
+                {continents.map(continent => (
+                  <option key={continent} value={continent}>{continent}</option>
+                ))}
+              </select>
+
+              <input
+                type="date"
+                className={styles.filterInput}
+                placeholder="From Date"
+                value={filters.dateFrom}
+                onChange={(e) => handleFilterChange('dateFrom', e.target.value)}
+              />
+
+              <input
+                type="date"
+                className={styles.filterInput}
+                placeholder="To Date"
+                value={filters.dateTo}
+                onChange={(e) => handleFilterChange('dateTo', e.target.value)}
+              />
+
+              {(filters.species || filters.continent || filters.dateFrom || filters.dateTo || filters.search) && (
+                <button 
+                  className={styles.clearButton}
+                  onClick={clearFilters}
+                >
+                  Clear Filters
+                </button>
+              )}
+            </div>
+
+            {/* Results Count */}
+            <div className={styles.resultsCount}>
+              Showing {displayedNFTs.length} of {nfts.length} NFTs
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* NFT Grid */}
+      <div className="container">
+        {isLoading ? (
+          <div className={styles.loadingState}>
+            <div className={styles.spinner}>🌳</div>
+            <p>Loading your NFT collection...</p>
+          </div>
+        ) : displayedNFTs.length > 0 ? (
+          <motion.div 
+            className={styles.nftGrid}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
+            {displayedNFTs.map((nft, index) => (
+              <motion.div
+                key={nft.id}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.1, duration: 0.4 }}
+              >
+                <NFTCard nft={nft} onClick={() => {}} />
+              </motion.div>
+            ))}
+          </motion.div>
+        ) : nfts.length === 0 ? (
+          /* Empty State - No NFTs */
+          <motion.div 
+            className={styles.emptyState}
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.6 }}
+          >
+            <div className={styles.emptyIcon}>🌱</div>
+            <h2 className={styles.emptyTitle}>You haven't planted any trees yet!</h2>
+            <p className={styles.emptyText}>
+              Start your reforestation journey by playing our eco-friendly games and earning ECO tokens.
+              Then mint your first Tree NFT certificate!
+            </p>
+            <div className={styles.emptyActions}>
+              <Link to="/game" className="btn btn-primary btn-lg">
+                🎮 Play a Game
+              </Link>
+              <button 
+                className="btn btn-outline btn-lg"
+                onClick={() => setIsMintModalOpen(true)}
+                disabled={!isConnected}
+              >
+                🌱 Mint Your First Tree
+              </button>
+            </div>
+          </motion.div>
+        ) : (
+          /* No Results from Filter */
+          <motion.div 
+            className={styles.noResults}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+          >
+            <div className={styles.noResultsIcon}>🔍</div>
+            <h3 className={styles.noResultsTitle}>No trees match your filters</h3>
+            <p className={styles.noResultsText}>Try adjusting your search criteria</p>
+            <button 
+              className="btn btn-secondary"
+              onClick={clearFilters}
+            >
+              Clear All Filters
+            </button>
+          </motion.div>
+        )}
+      </div>
+
+      {/* Stats Footer */}
+      {nfts.length > 0 && (
+        <div className={styles.statsFooter}>
+          <div className="container">
+            <div className={styles.statsGrid}>
+              <motion.div 
+                className={styles.statCard}
+                whileHover={{ y: -4 }}
+              >
+                <span className={styles.statIcon}>🌳</span>
+                <span className={styles.statValue}>{nfts.length}</span>
+                <span className={styles.statLabel}>Total Trees Planted</span>
+              </motion.div>
+              <motion.div 
+                className={styles.statCard}
+                whileHover={{ y: -4 }}
+              >
+                <span className={styles.statIcon}>💨</span>
+                <span className={styles.statValue}>
+                  {nfts.reduce((sum, nft) => sum + nft.carbonOffset, 0).toFixed(2)}
+                </span>
+                <span className={styles.statLabel}>Tons CO₂ Offset/Year</span>
+              </motion.div>
+              <motion.div 
+                className={styles.statCard}
+                whileHover={{ y: -4 }}
+              >
+                <span className={styles.statIcon}>🌍</span>
+                <span className={styles.statValue}>{continents.length}</span>
+                <span className={styles.statLabel}>Continents</span>
+              </motion.div>
+              <motion.div 
+                className={styles.statCard}
+                whileHover={{ y: -4 }}
+              >
+                <span className={styles.statIcon}>🪙</span>
+                <span className={styles.statValue}>{playerTokens.toLocaleString()}</span>
+                <span className={styles.statLabel}>ECO Tokens</span>
+              </motion.div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Mint Modal */}
+      <MintModal
+        isOpen={isMintModalOpen}
+        onClose={() => setIsMintModalOpen(false)}
+        onMintSuccess={handleMintSuccess}
+        playerTokens={playerTokens}
+      />
     </div>
   )
 }
