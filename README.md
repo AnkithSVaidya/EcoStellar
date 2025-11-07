@@ -1,7 +1,5 @@
 # EcoStellar 🌟
 
-Video link for the project - https://drive.google.com/file/d/1ISBvItoVuZLG5r6WCvwnYYQQUi8c_Q6C/view?usp=sharing 
-
 
 # Start server
 npm run dev
@@ -17,10 +15,7 @@ A Stellar/Soroban smart contract platform for the EcoQuest gaming ecosystem.
 
 # what I am using stellar for
 
-# Stellar	SDK validates address format
-# Stellar	Horizon API checks existence
-# Stellar fetched balance 
-# Stellar	Polls Horizon every 30s
+
 
 ## 🎮 About
 
